@@ -127,7 +127,7 @@ def lint(cli):
         # Check the rules.mk file(s)
         if not rules_mk_assignment_only(keyboard_path):
             ok = False
-            cli.log.error('%s: Non-assignment code found in rules.mk. Move it to processing.mk instead.', kb)
+            cli.log.error('%s: Non-assignment code found in rules.mk. Move it to post_rules.mk instead.', kb)
 
         # Keymap specific checks
         if cli.config.lint.keymap:
