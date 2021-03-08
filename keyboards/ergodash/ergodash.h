@@ -1,5 +1,4 @@
-#ifndef ERGODASH_H
-#define ERGODASH_H
+#pragma once
 
 #include "quantum.h"
 

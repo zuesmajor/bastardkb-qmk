@@ -1,5 +1,4 @@
-#ifndef ATREUS62_H
-#define ATREUS62_H
+#pragma once
 
 #include "quantum.h"
 
