@@ -21,7 +21,7 @@
 
 #ifndef TRACKBALL_DPI_OPTIONS
 #    define TRACKBALL_DPI_OPTIONS \
-        { 1200, 1600, 2400 }
+        { 600, 800, 1200 }
 #    ifndef TRACKBALL_DPI_DEFAULT
 #        define TRACKBALL_DPI_DEFAULT 1
 #    endif
