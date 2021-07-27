@@ -968,7 +968,7 @@ const USB_Descriptor_String_t PROGMEM SerialNumberString = {
         .Size                   = USB_STRING_LEN(sizeof(SERIAL_NUMBER) - 1), // Subtract 1 for null terminator
         .Type                   = DTYPE_String
     },
-    .UnicodeString              = USBSTR(SERIAL_NUMBER)
+    .UnicodeString              = LSTR(SERIAL_NUMBER)
 };
 #endif
 
