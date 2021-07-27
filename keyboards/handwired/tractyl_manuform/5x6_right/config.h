@@ -26,14 +26,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* key matrix size */
 // Rows are doubled-up
-#define MATRIX_ROWS 12
+#define MATRIX_ROWS 10
 #define MATRIX_COLS 6
 
 // wiring of each half
-#define MATRIX_ROW_PINS { D5, F0, C6, D4, B5, F4 }
-#define MATRIX_COL_PINS { F1, C7, B7, D7, E6, B4 }
+#define MATRIX_ROW_PINS { F1, B7, C6, D4, B5 }
+#define MATRIX_COL_PINS { D5, C7, F0, D7, E6, B4 }
 
-#define DIODE_DIRECTION COL2ROW
+#define DIODE_DIRECTION ROW2COL
 
 /* define if matrix has ghost */
 //#define MATRIX_HAS_GHOST

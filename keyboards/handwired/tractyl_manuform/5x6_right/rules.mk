@@ -22,7 +22,7 @@ BACKLIGHT_ENABLE = no       # Enable keyboard backlight functionality
 RGBLIGHT_ENABLE = no        # Enable keyboard RGB underglow
 BLUETOOTH_ENABLE = no       # Enable Bluetooth
 AUDIO_ENABLE = no           # Audio output
-SWAP_HANDS_ENABLE = yes
+SWAP_HANDS_ENABLE = no
 
 POINTING_DEVICE_ENABLE = yes
 MOUSE_SHARED_EP = no
