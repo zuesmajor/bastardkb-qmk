@@ -1,6 +1,10 @@
 # Pteron36
 
+<<<<<<< HEAD
 ![Pteron36](https://github.com/harshitgoel96/pteron36-split-keyboard)
+=======
+![Pteron36](https://i.imgur.com/PuXPWYfh.jpg)
+>>>>>>> origin/develop
 
 A 36 key keyboard with a bit more natural thumb cluster.
 
@@ -28,4 +32,8 @@ Add miryoku params as required.
 
 ## OLED and RotaryEncoder
 
+<<<<<<< HEAD
 I am working on adding OLED and RotaryEncoder support in keyboard config. 
+=======
+I am working on adding OLED and RotaryEncoder support in keyboard config. 
+>>>>>>> origin/develop
