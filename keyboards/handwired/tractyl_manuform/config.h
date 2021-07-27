@@ -21,8 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "config_common.h"
 
 /* USB Device descriptor parameter */
-#define VENDOR_ID               0x44DD
-#define MANUFACTURER            Drashna
+#define VENDOR_ID 0xA8F8
+#define MANUFACTURER Bastard Keyboards
 
 /* Set 0 if debouncing isn't needed */
 #define DEBOUNCE                5
