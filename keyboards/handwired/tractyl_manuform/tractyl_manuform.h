@@ -23,6 +23,8 @@
 #    include "5x6_right.h"
 #elif defined(KEYBOARD_handwired_tractyl_manuform_4x6_right)
 #    include "4x6_right.h"
+#elif defined(KEYBOARD_handwired_tractyl_manuform_5x3)
+#    include "5x3.h"
 #endif
 
 void process_mouse(report_mouse_t* mouse_report);
