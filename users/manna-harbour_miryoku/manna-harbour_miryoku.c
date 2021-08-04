@@ -117,19 +117,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     LGUI_T(KC_A),      LALT_T(KC_R),      LCTL_T(KC_S),      LSFT_T(KC_T),      KC_D,              KC_H,              LSFT_T(KC_N),      LCTL_T(KC_E),      LALT_T(KC_I),      LGUI_T(KC_O),
     KC_Z,              ALGR_T(KC_X),      KC_C,              KC_V,              KC_B,              KC_K,              KC_M,              KC_COMM,           ALGR_T(KC_DOT),    KC_SLSH,
     U_NP,              U_NP,              LT(MEDIA, KC_ESC), LT(NAV, KC_SPC),   LT(MOUSE, KC_TAB), LT(SYM, KC_ENT),   LT(NUM, KC_BSPC),  LT(FUN, KC_DEL),   U_NP,              U_NP
-  #elif defined MIRYOKU_ALPHAS_BEPO
-    KC_B, KC_SCLN, KC_P, KC_O, KC_QUOT, 
-    KC_DOT, KC_V, KC_D, KC_L, KC_J,
-
-    LGUI_T(KC_A), LALT_T(KC_U), LSFT_T(KC_I), LCTL_T(KC_E), KC_COMM, 
-    KC_C, LCTL_T(KC_T), LSFT_T(KC_S), LALT_T(KC_R), LGUI_T(KC_N),
-
-    KC_W, KC_Y, KC_X, KC_SLSH, KC_K, 
-    KC_M, KC_Q, KC_G, KC_H, KC_F, 
-
-   // LT(1,KC_BSPC), LT(2,KC_ENT), KC_TAB, 
-  //  LT(3,KC_ESC), LT(2,KC_SPC), KC_NO
-    U_NP,              U_NP,              LT(FUN, KC_DEL),   LT(NUM, KC_BSPC),  LT(SYM, KC_ENT),   LT(MOUSE, KC_TAB), LT(NAV, KC_SPC),   LT(MEDIA, KC_ESC), U_NP,              U_NP
   #elif defined MIRYOKU_ALPHAS_COLEMAKDHK
     KC_Q,              KC_W,              KC_F,              KC_P,              KC_B,              KC_J,              KC_L,              KC_U,              KC_Y,              KC_QUOT,
     LGUI_T(KC_A),      LALT_T(KC_R),      LCTL_T(KC_S),      LSFT_T(KC_T),      KC_G,              KC_K,              LSFT_T(KC_N),      LCTL_T(KC_E),      LALT_T(KC_I),      LGUI_T(KC_O),
@@ -155,6 +142,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     LGUI_T(KC_A),      LALT_T(KC_S),      LCTL_T(KC_D),      LSFT_T(KC_F),      KC_G,              KC_H,              LSFT_T(KC_J),      LCTL_T(KC_K),      LALT_T(KC_L),      LGUI_T(KC_QUOT),
     KC_Z,              ALGR_T(KC_X),      KC_C,              KC_V,              KC_B,              KC_N,              KC_M,              KC_COMM,           ALGR_T(KC_DOT),    KC_SLSH,
     U_NP,              U_NP,              LT(MEDIA, KC_ESC), LT(NAV, KC_SPC),   LT(MOUSE, KC_TAB), LT(SYM, KC_ENT),   LT(NUM, KC_BSPC),  LT(FUN, KC_DEL),   U_NP,              U_NP
+  #elif defined MIRYOKU_ALPHAS_BEPO
+    KC_B,              KC_SCLN,           KC_P,              KC_O,              KC_QUOT,           KC_DOT,            KC_V,              KC_D,              KC_L,              KC_J,
+    LGUI_T(KC_A),      LALT_T(KC_U),      LSFT_T(KC_I),      LCTL_T(KC_E),      KC_COMM,           KC_C,              LCTL_T(KC_T),      LSFT_T(KC_S),      LALT_T(KC_R),      LGUI_T(KC_N),
+    KC_W,              KC_Y,              KC_X,              KC_SLSH,           KC_K,              KC_M,              KC_Q,              KC_G,              KC_H,              KC_F, 
+   // LT(1,KC_BSPC), LT(2,KC_ENT), KC_TAB, 
+  //  LT(3,KC_ESC), LT(2,KC_SPC), KC_NO
+    U_NP,              U_NP,              LT(FUN, KC_DEL),   LT(NUM, KC_BSPC),  LT(SYM, KC_ENT),   LT(MOUSE, KC_TAB), LT(NAV, KC_SPC),   LT(MEDIA, KC_ESC), U_NP,              U_NP
   #else
     KC_Q,              KC_W,              KC_F,              KC_P,              KC_B,              KC_J,              KC_L,              KC_U,              KC_Y,              KC_QUOT,
     LGUI_T(KC_A),      LALT_T(KC_R),      LCTL_T(KC_S),      LSFT_T(KC_T),      KC_G,              KC_M,              LSFT_T(KC_N),      LCTL_T(KC_E),      LALT_T(KC_I),      LGUI_T(KC_O),
