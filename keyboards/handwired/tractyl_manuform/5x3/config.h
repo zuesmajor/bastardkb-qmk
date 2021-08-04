@@ -36,8 +36,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MATRIX_ROW_PINS_RIGHT { F0, C6, D4, B5 }
 #define MATRIX_COL_PINS_RIGHT { C7, B7, D7, E6, B4 }
 
-
-
 #define DIODE_DIRECTION ROW2COL
 
 /* define if matrix has ghost */

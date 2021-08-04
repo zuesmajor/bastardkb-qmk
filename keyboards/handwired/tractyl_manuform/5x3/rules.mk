@@ -31,3 +31,5 @@ SPLIT_KEYBOARD = yes
 
 SRC += drivers/sensors/pmw3360.c
 QUANTUM_LIB_SRC += spi_master.c tm_sync.c
+
+LAYOUTS = split_3x5_3
