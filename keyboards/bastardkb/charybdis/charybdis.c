@@ -342,6 +342,7 @@ void matrix_init_kb(void) {
 }
 #endif  // POINTING_DEVICE_ENABLE
 
+#if 0
 #ifdef __arm__
 void keyboard_pre_init_kb(void) {
     setPinInputHigh(A0);
@@ -355,3 +356,4 @@ void matrix_scan_kb(void) {
     matrix_scan_user();
 }
 #endif  // __arm__
+#endif
