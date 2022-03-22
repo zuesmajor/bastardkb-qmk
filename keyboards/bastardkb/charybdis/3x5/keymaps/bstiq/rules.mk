@@ -10,3 +10,10 @@ endif
 VIA_ENABLE = yes
 VIAL_ENABLE = yes
 VIALRGB_ENABLE = yes
+
+THUMBSTICK_ENABLE  	   = yes
+
+ifeq ($(strip $(THUMBSTICK_ENABLE)), yes)
+    POINTING_DEVICE_ENABLE = yes
+    POINTING_DEVICE_DRIVER = analog_joystickc
+endif
