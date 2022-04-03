@@ -40,12 +40,20 @@ led_config_t g_led_config = { {
     {      2,      3,      8,      9,     12 }, // Top row
     {      1,      4,      7,     10,     13 }, // Middle row
     {      0,      5,      6,     11,     14 }, // Bottom row
+#if defined(POINTING_DEVICE_LEFT) || defined(POINTING_DEVICE_COMBINED)
+    {     15, NO_LED,     16, NO_LED, NO_LED }, // Thumb cluster
+#else
     {     17, NO_LED,     15,     16, NO_LED }, // Thumb cluster
+#endif
     // Right split.
     {     20,     21,     26,     27,     30 }, // Top row
     {     19,     22,     25,     28,     31 }, // Middle row
     {     18,     23,     24,     29,     32 }, // Bottom row
+#if defined(POINTING_DEVICE_RIGHT) || defined(POINTING_DEVICE_COMBINED)
     {     33, NO_LED,     34, NO_LED, NO_LED }, // Thumb cluster
+#else
+    {     35, NO_LED,     33,     34, NO_LED }, // Thumb cluster
+#endif
 }, {
     /* LED index to physical position. */
     // Left split.
@@ -54,14 +62,22 @@ led_config_t g_led_config = { {
     /* index=6  */ {  36,  42 }, {  36,  21 }, {  36,   0 },
     /* index=9  */ {  54,   0 }, {  54,  21 }, {  54,  42 },
     /* index=12 */ {  72,   0 }, {  72,  21 }, {  72,  42 },
+#if defined(POINTING_DEVICE_LEFT) || defined(POINTING_DEVICE_COMBINED)
+    /* index=15 */ {  72,  64 }, {  90,  64 },
+#else
     /* index=15 */ {  72,  64 }, {  90,  64 }, { 108,  64 }, // Thumb cluster
+#endif
     // Right split.
     /* index=18 */ { 224,  42 }, { 224,  21 }, { 224,   0 }, // col 10 (right most)
     /* index=21 */ { 206,   0 }, { 206,  21 }, { 206,  42 }, // col 9
     /* index=24 */ { 188,  42 }, { 188,  21 }, { 188,   0 },
     /* index=27 */ { 170,   0 }, { 170,  21 }, { 170,  42 },
     /* index=30 */ { 152,   0 }, { 152,  21 }, { 152,  42 },
+#if defined(POINTING_DEVICE_RIGHT) || defined(POINTING_DEVICE_COMBINED)
     /* index=33 */ { 152,  64 }, { 134,  64 },
+#else
+    /* index=33 */ { 152,  64 }, { 134,  64 }, { 116, 64 },
+#endif
 }, {
     /* LED index to flag. */
     // Left split.
@@ -70,14 +86,22 @@ led_config_t g_led_config = { {
     /* index=6  */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
     /* index=9  */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
     /* index=12 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
-    /* index=15 */ LED_FLAG_MODIFIER, LED_FLAG_MODIFIER, LED_FLAG_MODIFIER, // Thumb cluster
+#if defined(POINTING_DEVICE_LEFT) || defined(POINTING_DEVICE_COMBINED)
+    /* index=15 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, // Thumb cluster
+#else
+    /* index=15 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, // Thumb cluster
+#endif
     // Right split.
     /* index=18 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, // col 10
     /* index=21 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, // col 9
     /* index=24 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
     /* index=27 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
     /* index=30 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
+#if defined(POINTING_DEVICE_RIGHT) || defined(POINTING_DEVICE_COMBINED)
     /* index=33 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, // Thumb cluster
+#else
+    /* index=33 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, // Thumb cluster
+#endif
 } };
 #endif
 // clang-format on

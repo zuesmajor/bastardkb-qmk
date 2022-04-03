@@ -36,13 +36,22 @@
 /* Trackball angle adjustment. */
 #define ROTATIONAL_TRANSFORM_ANGLE -25
 
-/* RGB settings. */
-#define RGBLED_NUM 35
-#define RGBLED_SPLIT \
-    { 18, 17 }
-
 /* RGB matrix support. */
 #ifdef RGB_MATRIX_ENABLE
+#    if defined(POINTING_DEVICE_LEFT)
+#        define RGBLED_NUM 35
+#        define RGBLED_SPLIT \
+            { 17, 18 }
+#    elif defined(POINTING_DEVICE_RIGHT)
+#        define RGBLED_NUM 35
+#        define RGBLED_SPLIT \
+            { 18, 17 }
+#    else
+#        define RGBLED_NUM 34
+#        define RGBLED_SPLIT \
+            { 17, 17 }
+#    endif
+
 #    define SPLIT_TRANSPORT_MIRROR
 #    define DRIVER_LED_TOTAL RGBLED_NUM
 #    define RGB_MATRIX_SPLIT RGBLED_SPLIT
