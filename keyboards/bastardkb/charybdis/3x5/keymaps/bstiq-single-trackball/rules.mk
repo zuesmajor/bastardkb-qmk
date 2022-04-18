@@ -10,3 +10,7 @@ endif
 VIA_ENABLE = yes
 VIAL_ENABLE = yes
 VIALRGB_ENABLE = yes
+
+# loads bstiq charybdis keymap with my defaults
+USER_NAME := bstiq
+SRC += $(USER_PATH)/keymaps/charybdis/3x5/charybdis34.c
