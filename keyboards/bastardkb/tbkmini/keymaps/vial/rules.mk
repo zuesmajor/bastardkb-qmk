@@ -1,4 +1,5 @@
 # Space saving settings.
+TAP_DANCE_ENABLE = no
 QMK_SETTINGS = no
 LTO_ENABLE = yes
 
