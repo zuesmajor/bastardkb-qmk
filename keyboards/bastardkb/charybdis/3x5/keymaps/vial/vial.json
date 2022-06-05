@@ -2,7 +2,6 @@
     "name": "Charybdis Nano",
     "vendorId": "0xA8F8",
     "productId": "0x1832",
-    "lighting": "vialrgb",
     "matrix": {
         "rows": 8,
         "cols": 5
