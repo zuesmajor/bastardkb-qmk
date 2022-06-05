@@ -148,10 +148,20 @@ ALL_FIRMWARES: list[FirmwareList] = (
     # `vial-kb/vial-qmk:vial`.
     FirmwareList(
         branch="bkb-vial",
-        configurations=tuple(
-            Firmware(keyboard=f"{keyboard}/{adapter}", keymap="vial")
-            for keyboard in ALL_BASTARD_KEYBOARDS
-            for adapter in STABLE_ADAPTERS
+        configurations=(
+            *tuple(
+                Firmware(keyboard=f"{keyboard}/{adapter}", keymap="vial")
+                for keyboard in ALL_BASTARD_KEYBOARDS
+                for adapter in STABLE_ADAPTERS
+            ),
+            *tuple(
+                Firmware(
+                    keyboard=f"{keyboard}/blackpill",
+                    keymap="vial",
+                    env_vars=("BOOTLOADER=tinyuf2",),
+                )
+                for keyboard in ALL_BASTARD_KEYBOARDS
+            ),
         ),
     ),
     # Firmware build off the `bkb-vial-feat-miryoku` branch that contains quick
@@ -164,14 +174,14 @@ ALL_FIRMWARES: list[FirmwareList] = (
                 keymap="manna-harbour_miryoku",
                 keymap_alias="miryoku-vial",
                 env_vars=(
-                    "KEY_OVERRIDE_ENABLE=no",
-                    "LTO_ENABLE=yes",
-                    "QMK_SETTINGS=no",
-                    "SPACE_CADET_ENABLE=no",
-                    "TAP_DANCE_ENABLE=no",
                     "VIA_ENABLE=yes",
                     "VIAL_ENABLE=yes",
                     "VIAL_INSECURE=yes",
+                    "LTO_ENABLE=yes",
+                    "SPACE_CADET_ENABLE=no",
+                    "TAP_DANCE_ENABLE=no",
+                    "KEY_OVERRIDE_ENABLE=no",
+                    "QMK_SETTINGS=no",
                     "VIALRGB_ENABLE=yes",
                 ),
             )
