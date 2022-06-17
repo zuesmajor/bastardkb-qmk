@@ -73,11 +73,16 @@ ALL_BASTARD_KEYBOARDS: list[str] = (
     *CHARYBDIS_KEYBOARDS,
 )
 
-STABLE_ADAPTERS: list[str] = (
+SMALL_FOOTPRINT_ADAPTERS: list[str] = (
     "v1/elitec",
     "v2/elitec",
+)
+
+STABLE_ADAPTERS: list[str] = (
+    *SMALL_FOOTPRINT_ADAPTERS,
     "blackpill",
 )
+
 ALL_ADAPTERS: list[str] = (
     *STABLE_ADAPTERS,
     "v2/stemcell",
@@ -146,6 +151,12 @@ ALL_FIRMWARES: list[FirmwareList] = (
                 )
                 for adapter in STABLE_ADAPTERS
             ),
+            Firmware(
+                keyboard=f"skeletyl/blackpill",
+                keymap="manna-harbour_miryoku",
+                keymap_alias="miryoku",
+                env_vars=("BOOTLOADER=tinyuf2",),
+            ),
         ),
     ),
     # All firmwares built on the `bkb-develop` branch, ie. the branch tracking
@@ -192,26 +203,57 @@ ALL_FIRMWARES: list[FirmwareList] = (
     # and dirty changes to build a Vial-enabled Miryoku keymap for the Skeletyl.
     FirmwareList(
         branch="bkb-vial-feat-manna_harbour-miryoku",
-        configurations=tuple(
+        configurations=(
+            *tuple(
+                Firmware(
+                    keyboard=f"skeletyl/{adapter}",
+                    keymap="manna-harbour_miryoku",
+                    keymap_alias="miryoku-vial",
+                    env_vars=(
+                        "KEY_OVERRIDE_ENABLE=no",
+                        "LTO_ENABLE=yes",
+                        "MIRYOKU_ALPHAS=QWERTY",
+                        "MIRYOKU_EXTRA=COLEMAKDH",
+                        "QMK_SETTINGS=no",
+                        "SPACE_CADET_ENABLE=no",
+                        "TAP_DANCE_ENABLE=no",
+                        "VIALRGB_ENABLE=yes",
+                        "VIAL_ENABLE=yes",
+                        "VIAL_INSECURE=yes",
+                        "VIA_ENABLE=yes",
+                    ),
+                )
+                for adapter in SMALL_FOOTPRINT_ADAPTERS
+            ),
             Firmware(
-                keyboard=f"skeletyl/{adapter}",
+                keyboard="skeletyl/blackpill",
                 keymap="manna-harbour_miryoku",
                 keymap_alias="miryoku-vial",
                 env_vars=(
+                    "LTO_ENABLE=no",
+                    "MIRYOKU_ALPHAS=QWERTY",
+                    "MIRYOKU_EXTRA=COLEMAKDH",
                     "VIA_ENABLE=yes",
                     "VIAL_ENABLE=yes",
                     "VIAL_INSECURE=yes",
-                    "LTO_ENABLE=yes",
-                    "MIRYOKU_ALPHAS=QWERTY",
-                    "MIRYOKU_EXTRA=COLEMAKDH",
-                    "SPACE_CADET_ENABLE=no",
-                    "TAP_DANCE_ENABLE=no",
-                    "KEY_OVERRIDE_ENABLE=no",
-                    "QMK_SETTINGS=no",
                     "VIALRGB_ENABLE=yes",
                 ),
-            )
-            for adapter in STABLE_ADAPTERS
+            ),
+            Firmware(
+                keyboard="skeletyl/blackpill",
+                keymap="manna-harbour_miryoku",
+                keymap_alias="miryoku-vial",
+                env_vars=(
+                    "BOOTLOADER=tinyuf2",
+                    "LTO_ENABLE=no",
+                    "MIRYOKU_ALPHAS=QWERTY",
+                    "MIRYOKU_EXTRA=COLEMAKDH",
+                    "VIA_ENABLE=yes",
+                    "VIAL_ENABLE=yes",
+                    "VIAL_INSECURE=yes",
+                    "VIALRGB_ENABLE=yes",
+                ),
+            ),
         ),
     ),
     # All firmwares built on the `bkb-stemcell` branch, ie. the branch tracking
