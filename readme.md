@@ -105,7 +105,7 @@ Building from source is useful to people who want to customize their keyboard an
 
 To build the firmware from source:
 
-1. Follow the [QMK docs](https://github.com/samhocevar-forks/qmk-firmware/blob/master/docs/newbs.md) to setup your environment
+1. Follow the [QMK docs](https://docs.qmk.fm/#/getting_started_build_tools) to setup your environment
 1. Checkout this repository
 
 To build a firmware **without** Vial support, use the `bkb-master` branch:
