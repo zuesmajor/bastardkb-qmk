@@ -139,9 +139,33 @@ ALL_FIRMWARES: list[FirmwareList] = (
                     keyboard=f"skeletyl/{adapter}",
                     keymap="manna-harbour_miryoku",
                     keymap_alias="miryoku",
+                    env_vars=(
+                        "MIRYOKU_ALPHAS=QWERTY",
+                        "MIRYOKU_EXTRA=COLEMAKDH",
+                    ),
                 )
                 for adapter in STABLE_ADAPTERS
             ),
+        ),
+    ),
+    # All firmwares built on the `bkb-develop` branch, ie. the branch tracking
+    # `qmk/qmk_firmware:develop`.
+    FirmwareList(
+        branch="bkb-develop",
+        configurations=(
+            *tuple(
+                Firmware(
+                    keyboard=f"{keyboard}/v2/splinky",
+                    keymap="default",
+                    keymap_alias="stock",
+                )
+                for keyboard in ALL_BASTARD_KEYBOARDS
+            ),
+            # Note: The firmware for the Dilemma is built against the
+            # `bkb-develop` branch because `qmk:develop` carries a number of
+            # improvements that the Cirque trackpad benefits from.
+            Firmware(keyboard="dilemma/elitec", keymap="default", keymap_alias="stock"),
+            Firmware(keyboard="dilemma/splinky", keymap="default", keymap_alias="stock"),
         ),
     ),
     # All firmwares built on the `bkb-vial` branch, ie. the branch tracking
@@ -178,6 +202,8 @@ ALL_FIRMWARES: list[FirmwareList] = (
                     "VIAL_ENABLE=yes",
                     "VIAL_INSECURE=yes",
                     "LTO_ENABLE=yes",
+                    "MIRYOKU_ALPHAS=QWERTY",
+                    "MIRYOKU_EXTRA=COLEMAKDH",
                     "SPACE_CADET_ENABLE=no",
                     "TAP_DANCE_ENABLE=no",
                     "KEY_OVERRIDE_ENABLE=no",
@@ -214,20 +240,6 @@ ALL_FIRMWARES: list[FirmwareList] = (
             ),
         ),
     ),
-    # All firmwares built on the `bkb-rp2040` branch, ie. the branch tracking
-    # `qmk/qmk_firmware:pull/14877/head` (not merged yet).
-    # See https://github.com/qmk/qmk_firmware/pull/14877.
-    FirmwareList(
-        branch="bkb-rp2040",
-        configurations=tuple(
-            Firmware(
-                keyboard=f"{keyboard}/v2/splinky",
-                keymap="default",
-                keymap_alias="stock",
-            )
-            for keyboard in ALL_BASTARD_KEYBOARDS
-        ),
-    ),
 )
 
 
@@ -244,9 +256,7 @@ class Reporter(object):
             maxBytes=1024 * 1024,
             backupCount=5,
         )
-        logging_file_handler.setFormatter(
-            logging.Formatter(fmt="%(asctime)s %(levelname)s %(message)s")
-        )
+        logging_file_handler.setFormatter(logging.Formatter(fmt="%(asctime)s %(levelname)s %(message)s"))
         self.logging.addHandler(logging_file_handler)
         self.logging.setLevel(level=logging.DEBUG)
 
@@ -307,9 +317,7 @@ class Executor(object):
         self.repository = repository
 
     def git_checkout(self, branch: str, update_submodules: bool) -> None:
-        self.reporter.progress_status(
-            f"Checking out [bright_magenta]{branch}[/bright_magenta]…"
-        )
+        self.reporter.progress_status(f"Checking out [bright_magenta]{branch}[/bright_magenta]…")
         try:
             branch_ref = self.repository.branches[branch]
         except KeyError:
@@ -317,9 +325,7 @@ class Executor(object):
         if not self.dry_run:
             self.repository.checkout(branch_ref)
             if update_submodules:
-                self.reporter.progress_status(
-                    f"([bright_magenta]{branch}[/bright_magenta]) Updating submodules…"
-                )
+                self.reporter.progress_status(f"([bright_magenta]{branch}[/bright_magenta]) Updating submodules…")
                 # TODO(0xcharly): use pygit2 to update submodules.
                 self._run(
                     ("git", "submodule", "update", "--init", "--recursive"),
@@ -327,9 +333,7 @@ class Executor(object):
                     cwd=self.repository.workdir,
                 )
         else:
-            self.reporter.progress_status(
-                f"([bright_magenta]{branch}[/bright_magenta]) Updating submodules…"
-            )
+            self.reporter.progress_status(f"([bright_magenta]{branch}[/bright_magenta]) Updating submodules…")
 
     def qmk_compile(self, firmware: Firmware) -> QmkCompletedProcess:
         self.reporter.progress_status(f"Compiling [bold white]{firmware}[/bold white]")
@@ -407,16 +411,12 @@ def build(
     newline_task = empty_status.add_task("")
     overall_status_task = overall_status.add_task("Preparing…")
     overall_progress_task = overall_progress.add_task("", total=total_firmware_count)
-    reporter.set_progress_status(
-        lambda message: overall_status.update(overall_status_task, description=message)
-    )
+    reporter.set_progress_status(lambda message: overall_status.update(overall_status_task, description=message))
     reporter.info(f"Preparing to build {total_firmware_count} BastardKB firmwares")
     with Live(progress_group, console=reporter.console):
         for branch, configurations in firmwares:
             # Checkout branch.
-            reporter.info(
-                f"  Building off branch [magenta]{branch}[/magenta] ({len(configurations)} firmwares)"
-            )
+            reporter.info(f"  Building off branch [magenta]{branch}[/magenta] ({len(configurations)} firmwares)")
             executor.git_checkout(branch, update_submodules=True)
 
             # Build firmwares off that branch.
@@ -424,11 +424,7 @@ def build(
                 completed_process = executor.qmk_compile(firmware)
                 if completed_process.returncode == 0:
                     try:
-                        on_firmware_compiled(
-                            read_firmware_filename_from_logs(
-                                firmware, completed_process.log_file
-                            )
-                        )
+                        on_firmware_compiled(read_firmware_filename_from_logs(firmware, completed_process.log_file))
                         built_firmware_count += 1
                         reporter.info(
                             f"    CC [not bold white]{str(firmware):46}[/not bold white] [green]SUCCESS[/green]"
@@ -438,21 +434,15 @@ def build(
                             f"    CC [not bold white]{str(firmware):46}[/not bold white] [yellow]WARNING[/yellow]"
                         )
                 else:
-                    reporter.error(
-                        f"    CC [not bold white]{str(firmware):46}[/not bold white] [red]FAILURE[/red]"
-                    )
+                    reporter.error(f"    CC [not bold white]{str(firmware):46}[/not bold white] [red]FAILURE[/red]")
                 overall_progress.update(overall_progress_task, advance=1)
             reporter.newline()
         overall_status.update(overall_status_task, visible=False)
         empty_status.update(newline_task, visible=False)
-        reporter.info(
-            f"Done: built={built_firmware_count}, failed={total_firmware_count - built_firmware_count}"
-        )
+        reporter.info(f"Done: built={built_firmware_count}, failed={total_firmware_count - built_firmware_count}")
 
 
-def copy_firmware_to_output_dir(
-    reporter: Reporter, output_dir: Path, repository_path: Path, firmware_filename: Path
-):
+def copy_firmware_to_output_dir(reporter: Reporter, output_dir: Path, repository_path: Path, firmware_filename: Path):
     try:
         firmware_file = repository_path / firmware_filename
         target = output_dir / firmware_file.name
@@ -472,18 +462,14 @@ def sigint_handler(reporter: Reporter, signal, frame):
 
 def main(argv: list[str]) -> None:
     # Parse command line arguments.
-    parser = argparse.ArgumentParser(
-        description="Create Bastard Keyboard firmware release."
-    )
+    parser = argparse.ArgumentParser(description="Create Bastard Keyboard firmware release.")
     parser.add_argument(
         "-n",
         "--dry-run",
         action="store_true",
         help="Don't actually build, just show the commands to be run.",
     )
-    parser.add_argument(
-        "-v", "--verbose", action="store_true", help="Enable verbose output."
-    )
+    parser.add_argument("-v", "--verbose", action="store_true", help="Enable verbose output.")
     parser.add_argument(
         "-r",
         "--repository",
