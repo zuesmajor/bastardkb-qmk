@@ -184,6 +184,45 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
             ),
         ),
     ),
+    # All firmwares built on the `bkb-develop-feat-zykrah-vial` branch, ie. the
+    # branch tracking `zykrah/vial-qmk:vial-develop`.
+    FirmwareList(
+        branch="bkb-develop-feat-zykrah-vial",
+        configurations=(
+            *tuple(
+                Firmware(
+                    keyboard=f"{keyboard}/{adapter}",
+                    keymap="vial",
+                    keymap_alias="vial-develop",
+                )
+                for keyboard in ALL_BASTARD_KEYBOARDS
+                for adapter in STABLE_ADAPTERS
+            ),
+            *tuple(
+                Firmware(
+                    keyboard=f"{keyboard}/blackpill",
+                    keymap="vial",
+                    keymap_alias="vial-develop",
+                    env_vars=("BOOTLOADER=tinyuf2",),
+                )
+                for keyboard in ALL_BASTARD_KEYBOARDS
+            ),
+            *tuple(
+                Firmware(
+                    keyboard=f"{keyboard}/v2/splinky",
+                    keymap="vial",
+                    keymap_alias="vial-develop",
+                )
+                for keyboard in ALL_BASTARD_KEYBOARDS
+            ),
+            # Note: The firmware for the Dilemma is built against the
+            # `bkb-develop` branch because `qmk:develop` carries a number of
+            # improvements that the Cirque trackpad benefits from.
+            # TODO(delay): enable when `via` and `vial` keymaps are available.
+            # Firmware(keyboard="dilemma/elitec", keymap="vial", keymap_alias="vial-develop"),
+            # Firmware(keyboard="dilemma/splinky", keymap="vial", keymap_alias="vial-develop"),
+        ),
+    ),
     # Firmware build off the `bkb-vial-feat-miryoku` branch that contains quick
     # and dirty changes to build a Vial-enabled Miryoku keymap for the Skeletyl.
     FirmwareList(
