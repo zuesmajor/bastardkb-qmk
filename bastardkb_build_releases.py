@@ -10,24 +10,18 @@ import signal
 import subprocess
 import sys
 import tempfile
-import time
 
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from functools import partial, reduce
 from logging.handlers import RotatingFileHandler
 from operator import iconcat
 from pathlib import Path, PurePath
 from pygit2 import (
-    GIT_STATUS_CURRENT,
-    GIT_STATUS_IGNORED,
     GitError,
-    Reference,
     Repository,
 )
-from rich.bar import Bar
 from rich.console import Console, Group
 from rich.live import Live
-from rich.panel import Panel
 from rich.progress import (
     BarColumn,
     MofNCompleteColumn,
@@ -43,7 +37,7 @@ class Firmware(NamedTuple):
     keyboard: str
     keymap: str
     keymap_alias: Optional[str] = None
-    env_vars: Optional[list[str]] = []
+    env_vars: Sequence[str] = []
 
     @property
     def output_filename(self) -> str:
@@ -55,41 +49,41 @@ class Firmware(NamedTuple):
 
 class FirmwareList(NamedTuple):
     branch: str
-    configurations: list[Firmware]
+    configurations: Sequence[Firmware]
 
 
-NON_CHARYBDIS_KEYBOARDS: list[str] = (
+NON_CHARYBDIS_KEYBOARDS: Sequence[str] = (
     "skeletyl",
     "tbkmini",
     "scylla",
 )
-CHARYBDIS_KEYBOARDS: list[str] = (
+CHARYBDIS_KEYBOARDS: Sequence[str] = (
     "charybdis/3x5",
     "charybdis/3x6",
     "charybdis/4x6",
 )
-ALL_BASTARD_KEYBOARDS: list[str] = (
+ALL_BASTARD_KEYBOARDS: Sequence[str] = (
     *NON_CHARYBDIS_KEYBOARDS,
     *CHARYBDIS_KEYBOARDS,
 )
 
-SMALL_FOOTPRINT_ADAPTERS: list[str] = (
+SMALL_FOOTPRINT_ADAPTERS: Sequence[str] = (
     "v1/elitec",
     "v2/elitec",
 )
 
-STABLE_ADAPTERS: list[str] = (
+STABLE_ADAPTERS: Sequence[str] = (
     *SMALL_FOOTPRINT_ADAPTERS,
     "blackpill",
 )
 
-ALL_ADAPTERS: list[str] = (
+ALL_ADAPTERS: Sequence[str] = (
     *STABLE_ADAPTERS,
     "v2/stemcell",
     "v2/splinky",
 )
 
-ALL_FIRMWARES: list[FirmwareList] = (
+ALL_FIRMWARES: Sequence[FirmwareList] = (
     # All firmwares built on the `bkb-master` branch, ie. the branch tracking
     # `qmk/qmk_firmware:master`.
     FirmwareList(
@@ -306,7 +300,7 @@ class Reporter(object):
         self.debug(f"Saving logs in: {self.log_dir}")
 
         # Progress status.
-        self._progress_status = lambda message: None
+        self._progress_status = lambda _: None
 
     def log_file(self, basename: str) -> Path:
         return Path(self.log_dir, basename).with_suffix(".log")
@@ -336,11 +330,6 @@ class Reporter(object):
         self.console.print(message)
         self.logging.error(message)
 
-    def fatal(self, message, exit_code: int = 1) -> None:
-        self.console.print(message)
-        self.logging.exception(message)
-        sys.exit(exit_code)
-
 
 class QmkCompletedProcess(object):
     def __init__(self, completed_process: subprocess.CompletedProcess, log_file: Path):
@@ -363,7 +352,8 @@ class Executor(object):
         try:
             branch_ref = self.repository.branches[branch]
         except KeyError:
-            self.reporter.fatal("Branch does not exist")
+            self.reporter.error("Branch does not exist")
+            sys.exit(1)
         if not self.dry_run:
             self.repository.checkout(branch_ref)
             if update_submodules:
@@ -400,8 +390,8 @@ class Executor(object):
 
     def _run(
         self,
-        argv: list[str],
-        log_file: str,
+        argv: Sequence[str],
+        log_file: Path,
         **kwargs,
     ) -> subprocess.CompletedProcess:
         self.reporter.debug(f"exec: {shlex.join(argv)}")
@@ -420,7 +410,7 @@ def total_firmware_count_reduce_callback(acc: int, firmware_list: FirmwareList) 
 
 def read_firmware_filename_from_logs(firmware: Firmware, log_file: Path) -> Path:
     pattern = re.compile(
-        f"Copying (?P<filename>{re.escape(firmware.output_filename)}\.[a-z0-9]+) to qmk_firmware folder"
+        f"Copying (?P<filename>{re.escape(firmware.output_filename)}\\.[a-z0-9]+) to qmk_firmware folder"
     )
     with log_file.open() as fd:
         for line in fd:
@@ -431,10 +421,9 @@ def read_firmware_filename_from_logs(firmware: Firmware, log_file: Path) -> Path
 
 
 def build(
-    repository: Repository,
     executor: Executor,
     reporter: Reporter,
-    firmwares: list[FirmwareList],
+    firmwares: Sequence[FirmwareList],
     on_firmware_compiled: Callable[[Path], None],
 ) -> None:
     empty_status = Progress(TextColumn(""))
@@ -498,11 +487,12 @@ def copy_firmware_to_output_dir(reporter: Reporter, output_dir: Path, repository
 
 
 def sigint_handler(reporter: Reporter, signal, frame):
+    del signal, frame
     reporter.progress_status("Interrupted.  Exiting…")
     sys.exit(1)
 
 
-def main(argv: list[str]) -> None:
+def main() -> None:
     # Parse command line arguments.
     parser = argparse.ArgumentParser(description="Create Bastard Keyboard firmware release.")
     parser.add_argument(
@@ -535,18 +525,19 @@ def main(argv: list[str]) -> None:
     # Open QMK repository.
     try:
         repository = Repository(cmdline_args.repository)
-    except GitError as e:
-        reporter.fatal("Failed to initialize QMK repository")
+    except GitError:
+        reporter.error("Failed to initialize QMK repository")
+        sys.exit(1)
 
     # Create output dir if needed.
     try:
         cmdline_args.output_dir.mkdir(parents=True, exist_ok=True)
     except FileExistsError:
-        reporter.fatal("Output path exists and is not a directory")
+        reporter.error("Output path exists and is not a directory")
+        sys.exit(1)
 
     executor = Executor(reporter, repository, cmdline_args.dry_run)
     build(
-        repository,
         executor,
         reporter,
         ALL_FIRMWARES,
@@ -560,4 +551,4 @@ def main(argv: list[str]) -> None:
 
 
 if __name__ == "__main__":
-    main(sys.argv)
+    main()
