@@ -84,10 +84,10 @@ ALL_ADAPTERS: Sequence[str] = (
 )
 
 ALL_FIRMWARES: Sequence[FirmwareList] = (
-    # All firmwares built on the `bkb-master` branch, ie. the branch tracking
-    # `qmk/qmk_firmware:master`.
+    # All firmwares built on the `bkb-develop` branch, ie. the branch tracking
+    # `qmk/qmk_firmware:develop`.
     FirmwareList(
-        branch="bkb-master",
+        branch="bkb-develop",
         configurations=(
             # Use the `default` keymap for the non-Charybdis boards (ie. Scylla,
             # TBK mini, Skeletyl).  These board don't have a `via` keymap and
@@ -151,13 +151,6 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
                 keymap_alias="miryoku",
                 env_vars=("BOOTLOADER=tinyuf2",),
             ),
-        ),
-    ),
-    # All firmwares built on the `bkb-develop` branch, ie. the branch tracking
-    # `qmk/qmk_firmware:develop`.
-    FirmwareList(
-        branch="bkb-develop",
-        configurations=(
             *tuple(
                 Firmware(
                     keyboard=f"{keyboard}/v2/splinky",
@@ -166,11 +159,9 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
                 )
                 for keyboard in ALL_BASTARD_KEYBOARDS
             ),
-            # Note: The firmware for the Dilemma is built against the
-            # `bkb-develop` branch because `qmk:develop` carries a number of
-            # improvements that the Cirque trackpad benefits from.
-            Firmware(keyboard="dilemma/elitec", keymap="default", keymap_alias="stock"),
-            Firmware(keyboard="dilemma/splinky", keymap="default", keymap_alias="stock"),
+            Firmware(keyboard="dilemma/assembled", keymap="via", keymap_alias="stock"),
+            Firmware(keyboard="dilemma/elitec", keymap="via", keymap_alias="stock"),
+            Firmware(keyboard="dilemma/splinky", keymap="via", keymap_alias="stock"),
         ),
     ),
     # All firmwares built on the `bkb-vial` branch, ie. the branch tracking
