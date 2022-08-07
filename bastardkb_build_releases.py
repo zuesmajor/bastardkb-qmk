@@ -190,32 +190,13 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
         configurations=(
             *tuple(
                 Firmware(
-                    keyboard=f"{keyboard}/{adapter}",
-                    keymap="vial",
-                    keymap_alias="vial-develop",
-                )
-                for keyboard in ALL_BASTARD_KEYBOARDS
-                for adapter in STABLE_ADAPTERS
-            ),
-            *tuple(
-                Firmware(
-                    keyboard=f"{keyboard}/blackpill",
-                    keymap="vial",
-                    keymap_alias="vial-develop",
-                    env_vars=("BOOTLOADER=tinyuf2",),
-                )
-                for keyboard in ALL_BASTARD_KEYBOARDS
-            ),
-            *tuple(
-                Firmware(
                     keyboard=f"{keyboard}/v2/splinky",
                     keymap="vial",
-                    keymap_alias="vial-develop",
                 )
                 for keyboard in ALL_BASTARD_KEYBOARDS
             ),
-            Firmware(keyboard="dilemma/assembled", keymap="vial", keymap_alias="vial-develop"),
-            Firmware(keyboard="dilemma/splinky", keymap="vial", keymap_alias="vial-develop"),
+            Firmware(keyboard="dilemma/assembled", keymap="vial"),
+            Firmware(keyboard="dilemma/splinky", keymap="vial"),
         ),
     ),
     # Firmware build off the `bkb-vial-feat-miryoku` branch that contains quick
