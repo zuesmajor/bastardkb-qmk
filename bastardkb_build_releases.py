@@ -218,9 +218,9 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
             # Note: The firmware for the Dilemma is built against the
             # `bkb-develop` branch because `qmk:develop` carries a number of
             # improvements that the Cirque trackpad benefits from.
-            # TODO(delay): enable when `via` and `vial` keymaps are available.
-            # Firmware(keyboard="dilemma/elitec", keymap="vial", keymap_alias="vial-develop"),
-            # Firmware(keyboard="dilemma/splinky", keymap="vial", keymap_alias="vial-develop"),
+            Firmware(keyboard="dilemma/assembled", keymap="vial", keymap_alias="vial-develop"),
+            Firmware(keyboard="dilemma/elitec", keymap="vial", keymap_alias="vial-develop"),
+            Firmware(keyboard="dilemma/splinky", keymap="vial", keymap_alias="vial-develop"),
         ),
     ),
     # Firmware build off the `bkb-vial-feat-miryoku` branch that contains quick
