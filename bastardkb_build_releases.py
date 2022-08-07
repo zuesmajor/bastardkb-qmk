@@ -160,7 +160,6 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
                 for keyboard in ALL_BASTARD_KEYBOARDS
             ),
             Firmware(keyboard="dilemma/assembled", keymap="via", keymap_alias="stock"),
-            Firmware(keyboard="dilemma/elitec", keymap="via", keymap_alias="stock"),
             Firmware(keyboard="dilemma/splinky", keymap="via", keymap_alias="stock"),
         ),
     ),
@@ -215,11 +214,7 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
                 )
                 for keyboard in ALL_BASTARD_KEYBOARDS
             ),
-            # Note: The firmware for the Dilemma is built against the
-            # `bkb-develop` branch because `qmk:develop` carries a number of
-            # improvements that the Cirque trackpad benefits from.
             Firmware(keyboard="dilemma/assembled", keymap="vial", keymap_alias="vial-develop"),
-            Firmware(keyboard="dilemma/elitec", keymap="vial", keymap_alias="vial-develop"),
             Firmware(keyboard="dilemma/splinky", keymap="vial", keymap_alias="vial-develop"),
         ),
     ),
