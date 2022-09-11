@@ -154,14 +154,6 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
                 keymap_alias="miryoku",
                 env_vars=("BOOTLOADER=tinyuf2",),
             ),
-            *tuple(
-                Firmware(
-                    keyboard=f"{keyboard}/v2/splinky",
-                    keymap="default",
-                    keymap_alias="stock",
-                )
-                for keyboard in ALL_BASTARD_KEYBOARDS
-            ),
             Firmware(keyboard="dilemma/assembled", keymap="via", keymap_alias="stock"),
             Firmware(keyboard="dilemma/splinky", keymap="via", keymap_alias="stock"),
         ),
