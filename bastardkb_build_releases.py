@@ -438,6 +438,7 @@ def build(
                         )
                 else:
                     reporter.error(f"    CC [not bold white]{str(firmware):46}[/not bold white] [red]FAILURE[/red]")
+                    reporter.error(f"Logs: {completed_process.log_file}")
                 overall_progress.update(overall_progress_task, advance=1)
             reporter.newline()
         overall_status.update(overall_status_task, visible=False)
