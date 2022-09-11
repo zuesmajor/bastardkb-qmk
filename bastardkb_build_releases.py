@@ -52,35 +52,37 @@ class FirmwareList(NamedTuple):
     configurations: Sequence[Firmware]
 
 
-NON_CHARYBDIS_KEYBOARDS: Sequence[str] = (
+DACMAN_KEYBOARD_FAMILY: Sequence[str] = (
     "skeletyl",
     "tbkmini",
     "scylla",
 )
-CHARYBDIS_KEYBOARDS: Sequence[str] = (
+
+CHARYBDIS_KEYBOARD_FAMILY: Sequence[str] = (
     "charybdis/3x5",
     "charybdis/3x6",
     "charybdis/4x6",
 )
+
 ALL_BASTARD_KEYBOARDS: Sequence[str] = (
-    *NON_CHARYBDIS_KEYBOARDS,
-    *CHARYBDIS_KEYBOARDS,
+    *DACMAN_KEYBOARD_FAMILY,
+    *CHARYBDIS_KEYBOARD_FAMILY,
 )
 
-SMALL_FOOTPRINT_ADAPTERS: Sequence[str] = (
+AVR_MCUS: Sequence[str] = (
     "v1/elitec",
     "v2/elitec",
 )
 
-STABLE_ADAPTERS: Sequence[str] = (
-    *SMALL_FOOTPRINT_ADAPTERS,
+ARM_MCUS: Sequence[str] = (
     "blackpill",
-)
-
-ALL_ADAPTERS: Sequence[str] = (
-    *STABLE_ADAPTERS,
     "v2/stemcell",
     "v2/splinky",
+)
+
+ALL_MCUS: Sequence[str] = (
+    *AVR_MCUS,
+    *ARM_MCUS,
 )
 
 ALL_FIRMWARES: Sequence[FirmwareList] = (
@@ -94,12 +96,12 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
             # their "stock" configuration is using the `default` keymap instead.
             *tuple(
                 Firmware(
-                    keyboard=f"{keyboard}/{adapter}",
+                    keyboard=f"{keyboard}/{mcu}",
                     keymap="default",
                     keymap_alias="stock",
                 )
-                for keyboard in NON_CHARYBDIS_KEYBOARDS
-                for adapter in STABLE_ADAPTERS
+                for keyboard in DACMAN_KEYBOARD_FAMILY
+                for mcu in ALL_MCUS
             ),
             # Use the `via` keymap for the Charybdis boards (ie. the Charybdis,
             # Charybdis mini, and Charybdis nano).  These boards have a very
@@ -107,12 +109,12 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
             # the `via` keymap instead.
             *tuple(
                 Firmware(
-                    keyboard=f"{keyboard}/{adapter}",
+                    keyboard=f"{keyboard}/{mcu}",
                     keymap="via",
                     keymap_alias="stock",
                 )
-                for keyboard in CHARYBDIS_KEYBOARDS
-                for adapter in STABLE_ADAPTERS
+                for keyboard in CHARYBDIS_KEYBOARD_FAMILY
+                for mcu in ALL_MCUS
             ),
             # Also build the Blackpill firmwares in uf2 format.
             *tuple(
@@ -122,7 +124,7 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
                     keymap_alias="stock",
                     env_vars=("BOOTLOADER=tinyuf2",),
                 )
-                for keyboard in NON_CHARYBDIS_KEYBOARDS
+                for keyboard in DACMAN_KEYBOARD_FAMILY
             ),
             *tuple(
                 Firmware(
@@ -131,11 +133,11 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
                     keymap_alias="stock",
                     env_vars=("BOOTLOADER=tinyuf2",),
                 )
-                for keyboard in CHARYBDIS_KEYBOARDS
+                for keyboard in CHARYBDIS_KEYBOARD_FAMILY
             ),
             *tuple(
                 Firmware(
-                    keyboard=f"skeletyl/{adapter}",
+                    keyboard=f"skeletyl/{mcu}",
                     keymap="manna-harbour_miryoku",
                     keymap_alias="miryoku",
                     env_vars=(
@@ -143,7 +145,7 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
                         "MIRYOKU_EXTRA=COLEMAKDH",
                     ),
                 )
-                for adapter in STABLE_ADAPTERS
+                for mcu in ALL_MCUS
             ),
             Firmware(
                 keyboard="skeletyl/blackpill",
@@ -166,32 +168,18 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
     # All firmwares built on the `bkb-vial` branch, ie. the branch tracking
     # `vial-kb/vial-qmk:vial`.
     FirmwareList(
-        branch="bkb-vial",
+        branch="bkb-master-feat-zykrah-vial",
         configurations=(
             *tuple(
-                Firmware(keyboard=f"{keyboard}/{adapter}", keymap="vial")
+                Firmware(keyboard=f"{keyboard}/{mcu}", keymap="vial")
                 for keyboard in ALL_BASTARD_KEYBOARDS
-                for adapter in STABLE_ADAPTERS
+                for mcu in ALL_MCUS
             ),
             *tuple(
                 Firmware(
                     keyboard=f"{keyboard}/blackpill",
                     keymap="vial",
                     env_vars=("BOOTLOADER=tinyuf2",),
-                )
-                for keyboard in ALL_BASTARD_KEYBOARDS
-            ),
-        ),
-    ),
-    # All firmwares built on the `bkb-develop-feat-zykrah-vial` branch, ie. the
-    # branch tracking `zykrah/vial-qmk:vial-develop`.
-    FirmwareList(
-        branch="bkb-develop-feat-zykrah-vial",
-        configurations=(
-            *tuple(
-                Firmware(
-                    keyboard=f"{keyboard}/v2/splinky",
-                    keymap="vial",
                 )
                 for keyboard in ALL_BASTARD_KEYBOARDS
             ),
@@ -206,7 +194,7 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
         configurations=(
             *tuple(
                 Firmware(
-                    keyboard=f"skeletyl/{adapter}",
+                    keyboard=f"skeletyl/{mcu}",
                     keymap="manna-harbour_miryoku",
                     keymap_alias="miryoku-vial",
                     env_vars=(
@@ -223,21 +211,24 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
                         "VIA_ENABLE=yes",
                     ),
                 )
-                for adapter in SMALL_FOOTPRINT_ADAPTERS
+                for mcu in AVR_MCUS
             ),
-            Firmware(
-                keyboard="skeletyl/blackpill",
-                keymap="manna-harbour_miryoku",
-                keymap_alias="miryoku-vial",
-                env_vars=(
-                    "LTO_ENABLE=no",
-                    "MIRYOKU_ALPHAS=QWERTY",
-                    "MIRYOKU_EXTRA=COLEMAKDH",
-                    "VIA_ENABLE=yes",
-                    "VIAL_ENABLE=yes",
-                    "VIAL_INSECURE=yes",
-                    "VIALRGB_ENABLE=yes",
-                ),
+            *tuple(
+                Firmware(
+                    keyboard="skeletyl/{mcu}",
+                    keymap="manna-harbour_miryoku",
+                    keymap_alias="miryoku-vial",
+                    env_vars=(
+                        "LTO_ENABLE=no",
+                        "MIRYOKU_ALPHAS=QWERTY",
+                        "MIRYOKU_EXTRA=COLEMAKDH",
+                        "VIA_ENABLE=yes",
+                        "VIAL_ENABLE=yes",
+                        "VIAL_INSECURE=yes",
+                        "VIALRGB_ENABLE=yes",
+                    ),
+                )
+                for mcu in ARM_MCUS
             ),
             Firmware(
                 keyboard="skeletyl/blackpill",
@@ -253,32 +244,6 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
                     "VIAL_INSECURE=yes",
                     "VIALRGB_ENABLE=yes",
                 ),
-            ),
-        ),
-    ),
-    # All firmwares built on the `bkb-stemcell` branch, ie. the branch tracking
-    # `qmk/qmk_firmware:pull/16287/head` (not merged yet).
-    # See https://github.com/qmk/qmk_firmware/pull/16287.
-    FirmwareList(
-        branch="bkb-master",
-        configurations=(
-            *tuple(
-                Firmware(
-                    keyboard=f"{keyboard}/v2/stemcell",
-                    keymap="default",
-                    keymap_alias="stock",
-                    env_vars=("STMC=yes", "STMC_US=yes"),
-                )
-                for keyboard in NON_CHARYBDIS_KEYBOARDS
-            ),
-            *tuple(
-                Firmware(
-                    keyboard=f"{keyboard}/v2/stemcell",
-                    keymap="via",
-                    keymap_alias="stock",
-                    env_vars=("STMC=yes", "STMC_US=yes"),
-                )
-                for keyboard in CHARYBDIS_KEYBOARDS
             ),
         ),
     ),
@@ -342,7 +307,7 @@ class QmkCompletedProcess(object):
         self._completed_process = completed_process
         self.log_file = log_file
 
-    @property
+    @ property
     def returncode(self) -> int:
         return self._completed_process.returncode
 
