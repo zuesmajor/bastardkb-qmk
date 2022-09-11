@@ -215,7 +215,7 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
             ),
             *tuple(
                 Firmware(
-                    keyboard="skeletyl/{mcu}",
+                    keyboard=f"skeletyl/{mcu}",
                     keymap="manna-harbour_miryoku",
                     keymap_alias="miryoku-vial",
                     env_vars=(
@@ -313,8 +313,9 @@ class QmkCompletedProcess(object):
 
 
 class Executor(object):
-    def __init__(self, reporter: Reporter, repository: Repository, dry_run: bool):
+    def __init__(self, reporter: Reporter, repository: Repository, dry_run: bool, parallel: int):
         self.dry_run = dry_run
+        self.parallel = parallel
         self.reporter = reporter
         self.repository = repository
 
@@ -345,7 +346,7 @@ class Executor(object):
             "compile",
             "--clean",
             "--parallel",
-            "0",
+            str(self.parallel),
             "--keyboard",
             f"bastardkb/{firmware.keyboard}",
             "--keymap",
@@ -472,6 +473,13 @@ def main() -> None:
         action="store_true",
         help="Don't actually build, just show the commands to be run.",
     )
+    parser.add_argument(
+        "-j",
+        "--parallel",
+        type=int,
+        help="Don't actually build, just show the commands to be run.",
+        default=1,
+    )
     parser.add_argument("-v", "--verbose", action="store_true", help="Enable verbose output.")
     parser.add_argument(
         "-r",
@@ -507,7 +515,7 @@ def main() -> None:
         reporter.error("Output path exists and is not a directory")
         sys.exit(1)
 
-    executor = Executor(reporter, repository, cmdline_args.dry_run)
+    executor = Executor(reporter, repository, cmdline_args.dry_run, cmdline_args.parallel)
     build(
         executor,
         reporter,
