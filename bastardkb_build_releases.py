@@ -84,10 +84,10 @@ ALL_ADAPTERS: Sequence[str] = (
 )
 
 ALL_FIRMWARES: Sequence[FirmwareList] = (
-    # All firmwares built on the `bkb-develop` branch, ie. the branch tracking
-    # `qmk/qmk_firmware:develop`.
+    # All firmwares built on the `bkb-master` branch, ie. the branch tracking
+    # `qmk/qmk_firmware:master`.
     FirmwareList(
-        branch="bkb-develop",
+        branch="bkb-master",
         configurations=(
             # Use the `default` keymap for the non-Charybdis boards (ie. Scylla,
             # TBK mini, Skeletyl).  These board don't have a `via` keymap and
@@ -146,7 +146,7 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
                 for adapter in STABLE_ADAPTERS
             ),
             Firmware(
-                keyboard=f"skeletyl/blackpill",
+                keyboard="skeletyl/blackpill",
                 keymap="manna-harbour_miryoku",
                 keymap_alias="miryoku",
                 env_vars=("BOOTLOADER=tinyuf2",),
@@ -260,7 +260,7 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
     # `qmk/qmk_firmware:pull/16287/head` (not merged yet).
     # See https://github.com/qmk/qmk_firmware/pull/16287.
     FirmwareList(
-        branch="bkb-stemcell",
+        branch="bkb-master",
         configurations=(
             *tuple(
                 Firmware(
