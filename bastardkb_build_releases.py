@@ -6,6 +6,7 @@ import os
 import os.path
 import re
 import shlex
+import shutil
 import signal
 import subprocess
 import sys
@@ -435,7 +436,7 @@ def build(
     with Live(progress_group, console=reporter.console):
         for branch, configurations in firmwares:
             # Checkout branch.
-            reporter.info(f"  Building off branch [magenta]{branch}[/magenta] ({len(configurations)} firmwares)")
+            reporter.info(f"  Building off branch [magenta]{branch}[/] ({len(configurations)} firmwares)")
             executor.git_checkout(branch, update_submodules=True)
 
             # Build firmwares off that branch.
@@ -446,14 +447,14 @@ def build(
                         on_firmware_compiled(read_firmware_filename_from_logs(firmware, completed_process.log_file))
                         built_firmware_count += 1
                         reporter.info(
-                            f"    CC [not bold white]{str(firmware):46}[/not bold white] [green]SUCCESS[/green]"
+                            f"    CC [not bold white]{str(firmware):46}[/] [green]SUCCESS[/]"
                         )
                     except FileNotFoundError:
                         reporter.warn(
-                            f"    CC [not bold white]{str(firmware):46}[/not bold white] [yellow]WARNING[/yellow]"
+                            f"    CC [not bold white]{str(firmware):46}[/] [yellow]WARNING[/]"
                         )
                 else:
-                    reporter.error(f"    CC [not bold white]{str(firmware):46}[/not bold white] [red]FAILURE[/red]")
+                    reporter.error(f"    CC [not bold white]{str(firmware):46}[/] [red]FAILURE[/]")
                     reporter.error(f"Logs: {completed_process.log_file}")
                 overall_progress.update(overall_progress_task, advance=1)
             reporter.newline()
@@ -475,6 +476,31 @@ def copy_firmware_to_output_dir(reporter: Reporter, output_dir: Path, repository
         reporter.logging.exception("failed to copy firmware to output directory")
 
 
+def copy_assets_to_output_dir(executor: Executor, reporter: Reporter, output_dir: Path, repository_path: Path):
+    reporter.newline()
+    reporter.info("Copying BastardKB firmwares assets")
+    executor.git_checkout('main', update_submodules=False)
+
+    try:
+        via_json_dir = (repository_path / 'via').resolve()
+    except FileExistsError:
+        reporter.error("Cannot find Via's JSON files directory")
+        return
+
+    if not via_json_dir.is_dir():
+        reporter.error(f"{via_json_dir} is not a directory")
+        return
+
+    via_json_list = [f for f in via_json_dir.glob('*.via.json') if f.is_file()]
+    reporter.info(f"  Copying [magenta]Via[/] definition files ({len(via_json_list)} files)")
+    for src in via_json_list:
+        dst = output_dir / src.name
+        if not executor.dry_run:
+            shutil.copyfile(src, dst)
+        reporter.info(f"    CP [not bold white]{str(src.name):46}[/] [green]DONE[/]")
+        reporter.logging.debug(f"copy: {src} -> {dst}")
+
+
 def sigint_handler(reporter: Reporter, signal, frame):
     del signal, frame
     reporter.progress_status("Interrupted.  Exiting…")
@@ -494,7 +520,7 @@ def main() -> None:
         "-j",
         "--parallel",
         type=int,
-        help="Don't actually build, just show the commands to be run.",
+        help="Parallel option to pass to qmk-compile",
         default=1,
     )
     parser.add_argument("-v", "--verbose", action="store_true", help="Enable verbose output.")
@@ -532,7 +558,10 @@ def main() -> None:
         reporter.error("Output path exists and is not a directory")
         sys.exit(1)
 
+    # Create the process dispatcher.
     executor = Executor(reporter, repository, cmdline_args.dry_run, cmdline_args.parallel)
+
+    # Build the firmwares and copy them to the ouptut directory.
     build(
         executor,
         reporter,
@@ -543,7 +572,10 @@ def main() -> None:
             cmdline_args.output_dir,
             cmdline_args.repository,
         ),
-    )  # Build firmwares.
+    )
+
+    # Copy assets.
+    copy_assets_to_output_dir(executor, reporter, cmdline_args.output_dir, cmdline_args.repository)
 
 
 if __name__ == "__main__":
