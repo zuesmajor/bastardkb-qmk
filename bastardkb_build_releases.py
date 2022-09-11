@@ -165,15 +165,15 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
             Firmware(keyboard="dilemma/splinky", keymap="via", keymap_alias="stock"),
         ),
     ),
-    # All firmwares built on the `bkb-vial` branch, ie. the branch tracking
-    # `vial-kb/vial-qmk:vial`.
+    # All firmwares built on the `bkb-master-feat-zykrah-vial` branch, ie. the
+    # branch tracking `zykrah/vial-qmk:vial-develop`.
     FirmwareList(
         branch="bkb-master-feat-zykrah-vial",
         configurations=(
             *tuple(
                 Firmware(keyboard=f"{keyboard}/{mcu}", keymap="vial")
                 for keyboard in ALL_BASTARD_KEYBOARDS
-                for mcu in ALL_MCUS
+                for mcu in ARM_MCUS
             ),
             *tuple(
                 Firmware(
@@ -185,6 +185,22 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
             ),
             Firmware(keyboard="dilemma/assembled", keymap="vial"),
             Firmware(keyboard="dilemma/splinky", keymap="vial"),
+        ),
+    ),
+    # All LTS firmwares built on the `bkb-lts-vial` branch, ie. the branch
+    # tracking a frozen version of `vial-kb/vial-qmk:vial`.
+    # Vial-enabled Charybdis firmwares targeting AVR mcus are built against an
+    # older version to ensure that the minimal viable feature set fits on the
+    # controller.
+    # See https://github.com/Bastardkb/bastardkb-qmk/issues/24 for more details.
+    FirmwareList(
+        branch="bkb-vial",
+        configurations=(
+            *tuple(
+                Firmware(keyboard=f"{keyboard}/{mcu}", keymap="vial", keymap_alias="lts-vial")
+                for keyboard in ALL_BASTARD_KEYBOARDS
+                for mcu in AVR_MCUS
+            ),
         ),
     ),
     # Firmware build off the `bkb-vial-feat-miryoku` branch that contains quick
