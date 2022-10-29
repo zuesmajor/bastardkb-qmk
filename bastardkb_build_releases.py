@@ -20,6 +20,7 @@ from pathlib import Path, PurePath
 from pygit2 import (
     GitError,
     Repository,
+    Worktree,
 )
 from rich.console import Console, Group
 from rich.live import Live
@@ -154,8 +155,8 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
                 keymap_alias="miryoku",
                 env_vars=("BOOTLOADER=tinyuf2",),
             ),
-            Firmware(keyboard="dilemma/assembled", keymap="via", keymap_alias="stock"),
-            Firmware(keyboard="dilemma/splinky", keymap="via", keymap_alias="stock"),
+            Firmware(keyboard="dilemma/3x5_2/assembled", keymap="via", keymap_alias="stock"),
+            Firmware(keyboard="dilemma/3x5_2/splinky", keymap="via", keymap_alias="stock"),
         ),
     ),
     # All firmwares built on the `bkb-master-feat-zykrah-vial` branch, ie. the
@@ -187,7 +188,7 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
     # controller.
     # See https://github.com/Bastardkb/bastardkb-qmk/issues/24 for more details.
     FirmwareList(
-        branch="bkb-vial",
+        branch="bkb-lts-vial",
         configurations=(
             *tuple(
                 Firmware(keyboard=f"{keyboard}/{mcu}", keymap="vial", keymap_alias="lts-vial")
@@ -316,7 +317,7 @@ class QmkCompletedProcess(object):
         self._completed_process = completed_process
         self.log_file = log_file
 
-    @ property
+    @property
     def returncode(self) -> int:
         return self._completed_process.returncode
 
@@ -328,27 +329,33 @@ class Executor(object):
         self.reporter = reporter
         self.repository = repository
 
-    def git_checkout(self, branch: str, update_submodules: bool) -> None:
+    def git_ensure_worktree(self, branch: str, update_submodules: bool) -> Worktree:
         self.reporter.progress_status(f"Checking out [bright_magenta]{branch}[/bright_magenta]…")
         try:
-            branch_ref = self.repository.branches[branch]
-        except KeyError:
-            self.reporter.error("Branch does not exist")
+            worktree = self.repository.lookup_worktree(branch)
+            if worktree is None:
+                raise GitError
+        except GitError:
+            self.reporter.error(f"Worktree does not exist: {branch}")
             sys.exit(1)
         if not self.dry_run:
-            self.repository.checkout(branch_ref)
+            # TODO: checkout worktree if it does not exist.
+            # self.repository.checkout(branch_ref)
             if update_submodules:
-                self.reporter.progress_status(f"([bright_magenta]{branch}[/bright_magenta]) Updating submodules…")
-                # TODO(0xcharly): use pygit2 to update submodules.
+                self.reporter.progress_status(
+                    f"([bright_magenta]{worktree.name}[/bright_magenta]) Updating submodules…"
+                )
+                # TODO: use pygit2 to update submodules.
                 self._run(
                     ("git", "submodule", "update", "--init", "--recursive"),
-                    log_file=self.reporter.log_file(f"git-submodule-update-{branch}"),
-                    cwd=self.repository.workdir,
+                    log_file=self.reporter.log_file(f"git-submodule-update-{worktree.name}"),
+                    cwd=worktree.path,
                 )
         else:
-            self.reporter.progress_status(f"([bright_magenta]{branch}[/bright_magenta]) Updating submodules…")
+            self.reporter.progress_status(f"([bright_magenta]{worktree.name}[/bright_magenta]) Updating submodules…")
+        return worktree
 
-    def qmk_compile(self, firmware: Firmware) -> QmkCompletedProcess:
+    def qmk_compile(self, firmware: Firmware, worktree: Worktree) -> QmkCompletedProcess:
         self.reporter.progress_status(f"Compiling [bold white]{firmware}[/bold white]")
         argv = (
             "qmk",
@@ -367,7 +374,7 @@ class Executor(object):
             *reduce(iconcat, (("-e", env_var) for env_var in firmware.env_vars), []),
         )
         log_file = self.reporter.log_file(f"qmk-compile-{firmware.output_filename}")
-        return QmkCompletedProcess(self._run(argv, log_file=log_file), log_file)
+        return QmkCompletedProcess(self._run(argv, log_file=log_file, cwd=worktree.path), log_file)
 
     def _run(
         self,
@@ -429,24 +436,22 @@ def build(
         for branch, configurations in firmwares:
             # Checkout branch.
             reporter.info(f"  Building off branch [magenta]{branch}[/] ({len(configurations)} firmwares)")
-            executor.git_checkout(branch, update_submodules=True)
+            worktree = executor.git_ensure_worktree(branch, update_submodules=True)
 
             # Build firmwares off that branch.
             for firmware in configurations:
-                completed_process = executor.qmk_compile(firmware)
+                completed_process = executor.qmk_compile(firmware, worktree)
                 if completed_process.returncode == 0:
                     try:
-                        on_firmware_compiled(read_firmware_filename_from_logs(firmware, completed_process.log_file))
+                        on_firmware_compiled(
+                            worktree.path / read_firmware_filename_from_logs(firmware, completed_process.log_file)
+                        )
                         built_firmware_count += 1
-                        reporter.info(
-                            f"    CC [not bold white]{str(firmware):46}[/] [green]SUCCESS[/]"
-                        )
+                        reporter.info(f"    [not bold white]{firmware}[/] [green]ok[/]")
                     except FileNotFoundError:
-                        reporter.warn(
-                            f"    CC [not bold white]{str(firmware):46}[/] [yellow]WARNING[/]"
-                        )
+                        reporter.warn(f"    [not bold white]{firmware}[/] [yellow]ok[/]")
                 else:
-                    reporter.error(f"    CC [not bold white]{str(firmware):46}[/] [red]FAILURE[/]")
+                    reporter.error(f"    [not bold white]{firmware}[/] [red]ko[/]")
                     reporter.error(f"Logs: {completed_process.log_file}")
                 overall_progress.update(overall_progress_task, advance=1)
             reporter.newline()
@@ -455,15 +460,14 @@ def build(
         reporter.info(f"Done: built={built_firmware_count}, failed={total_firmware_count - built_firmware_count}")
 
 
-def copy_firmware_to_output_dir(reporter: Reporter, output_dir: Path, repository_path: Path, firmware_filename: Path):
+def copy_firmware_to_output_dir(reporter: Reporter, output_dir: Path, firmware_path: Path):
     try:
-        firmware_file = repository_path / firmware_filename
-        target = output_dir / firmware_file.name
-        if firmware_file != target:
-            reporter.logging.debug(f"copy: {firmware_file} -> {target}")
-            firmware_file.rename(target)
+        target = output_dir / firmware_path.name
+        if firmware_path != target:
+            reporter.logging.debug(f"copy: {firmware_path} -> {target}")
+            firmware_path.rename(target)
         else:
-            reporter.logging.debug(f"firmware already at {firmware_file}")
+            reporter.logging.debug(f"firmware already at {firmware_path}")
     except OSError:
         reporter.logging.exception("failed to copy firmware to output directory")
 
@@ -471,10 +475,9 @@ def copy_firmware_to_output_dir(reporter: Reporter, output_dir: Path, repository
 def copy_assets_to_output_dir(executor: Executor, reporter: Reporter, output_dir: Path, repository_path: Path):
     reporter.newline()
     reporter.info("Copying BastardKB firmwares assets")
-    executor.git_checkout('main', update_submodules=False)
 
     try:
-        via_json_dir = (repository_path / 'via').resolve()
+        via_json_dir = (repository_path / "main" / "via").resolve()
     except FileExistsError:
         reporter.error("Cannot find Via's JSON files directory")
         return
@@ -483,13 +486,13 @@ def copy_assets_to_output_dir(executor: Executor, reporter: Reporter, output_dir
         reporter.error(f"{via_json_dir} is not a directory")
         return
 
-    via_json_list = [f for f in via_json_dir.glob('*.via.json') if f.is_file()]
+    via_json_list = [f for f in via_json_dir.glob("*.via.json") if f.is_file()]
     reporter.info(f"  Copying [magenta]Via[/] definition files ({len(via_json_list)} files)")
     for src in via_json_list:
         dst = output_dir / src.name
         if not executor.dry_run:
             shutil.copyfile(src, dst)
-        reporter.info(f"    CP [not bold white]{str(src.name):46}[/] [green]DONE[/]")
+        reporter.info(f"    [not bold white]{src.name}[/] [green]ok[/]")
         reporter.logging.debug(f"copy: {src} -> {dst}")
 
 
@@ -543,6 +546,10 @@ def main() -> None:
         reporter.error("Failed to initialize QMK repository")
         sys.exit(1)
 
+    if not repository.is_bare:
+        reporter.error(f"Repository must be bare: {repository}")
+        sys.exit(1)
+
     # Create output dir if needed.
     try:
         cmdline_args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -562,7 +569,6 @@ def main() -> None:
             copy_firmware_to_output_dir,
             reporter,
             cmdline_args.output_dir,
-            cmdline_args.repository,
         ),
     )
 
