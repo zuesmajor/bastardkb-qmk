@@ -36,7 +36,8 @@ bastardkb_{keyboard}_{mcu-adapter}_{keymap}
 
 - `v1_elitec`
 - `v2_elitec`
-- `v2_splinky`
+- `v2_splinky_v2`
+- `v2_splinky_v3`
 - `v2_stemcell`
 - `blackpill`
 
@@ -175,7 +176,8 @@ For **all other boards**, it can be one of the following:
 
 - `v1_elitec`
 - `v2_elitec`
-- `v2_splinky`
+- `v2_splinky_v2`
+- `v2_splinky_v3`
 - `v2_stemcell`
 - `blackpill`
 

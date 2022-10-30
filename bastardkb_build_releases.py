@@ -79,7 +79,8 @@ AVR_MCUS: Sequence[str] = (
 ARM_MCUS: Sequence[str] = (
     "blackpill",
     "v2/stemcell",
-    "v2/splinky",
+    "v2/splinky/v2",
+    "v2/splinky/v3",
 )
 
 ALL_MCUS: Sequence[str] = (
@@ -159,10 +160,9 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
             Firmware(keyboard="dilemma/3x5_2/splinky", keymap="via", keymap_alias="stock"),
         ),
     ),
-    # All firmwares built on the `bkb-master-feat-zykrah-vial` branch, ie. the
-    # branch tracking `zykrah/vial-qmk:vial-develop`.
+    # All firmwares built on the `bkb-vial` branch, ie. the branch tracking `vial-kb/vial-qmk:vial`.
     FirmwareList(
-        branch="bkb-master-feat-zykrah-vial",
+        branch="bkb-vial",
         configurations=(
             *tuple(
                 Firmware(keyboard=f"{keyboard}/{mcu}", keymap="vial")
@@ -177,8 +177,8 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
                 )
                 for keyboard in ALL_BASTARD_KEYBOARDS
             ),
-            Firmware(keyboard="dilemma/assembled", keymap="vial"),
-            Firmware(keyboard="dilemma/splinky", keymap="vial"),
+            Firmware(keyboard="dilemma/3x5_2/assembled", keymap="vial"),
+            Firmware(keyboard="dilemma/3x5_2/splinky", keymap="vial"),
         ),
     ),
     # All LTS firmwares built on the `bkb-lts-vial` branch, ie. the branch
