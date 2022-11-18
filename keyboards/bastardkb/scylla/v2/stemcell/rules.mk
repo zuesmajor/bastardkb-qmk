@@ -4,6 +4,7 @@ MCU = STM32F411
 # Bootloader selection
 BOOTLOADER = stm32-dfu
 CONVERT_TO = stemcell
+STMC_US = yes
 
 # Build Options
 #   change yes to no to disable
