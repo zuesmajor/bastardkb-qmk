@@ -41,5 +41,6 @@
 
 #include "custom_config.h"
 
+#define DYNAMIC_KEYMAP_LAYER_COUNT 8
 #define VIAL_KEYBOARD_UID \
     { 0x73, 0x18, 0xF9, 0xD5, 0x18, 0x11, 0x99, 0xFF }
