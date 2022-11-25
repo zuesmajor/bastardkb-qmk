@@ -36,6 +36,9 @@
 /* serial.c configuration (for split keyboard). */
 #define SOFT_SERIAL_PIN GP1
 
+/* VBUS detection. */
+#define USB_VBUS_PIN GP19
+
 /* CRC. */
 #define CRC8_USE_TABLE
 #define CRC8_OPTIMIZE_SPEED
