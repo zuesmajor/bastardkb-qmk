@@ -198,7 +198,6 @@ Note that Vial's `master` usually lags a bit behind QMK's `master`, so the lates
 | Branch following QMK's `master` | Parent                     | Description                                          |
 | ------------------------------- | -------------------------- | ---------------------------------------------------- |
 | `bkb-master`                    | `qmk/qmk_firmware/master`  | Contains the latest sources for BastardKB's firmware |
-| `bkb-develop`                   | `qmk/qmk_firmware/develop` | Contains the latest sources for BastardKB's firmware |
 
 | Branch following Vial's `master` | Parent          | Description                                        |
 | -------------------------------- | ----------------| -------------------------------------------------- |
