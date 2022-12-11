@@ -158,27 +158,28 @@ bastardkb/{keyboard}/{mcu-adapter}
 - `skeletyl`: the 3x5+3 [Skeletyl](https://bastardkb.com/skeletyl/)
 - `tbkmini`: the 3x6+3 [TBK Mini](https://bastardkb.com/tbk-mini/)
 - `scylla`: the 4x6+5 [Scylla](https://bastardkb.com/scylla/)
-- `charybdis_3x5`: the 3x5+3 [Charybdis Nano](https://bastardkb.com/charybdis-nano/)
-- `charybdis_3x6`: the 3x6+3 Charybdis Mini
-- `charybdis_4x6`: the 4x6+5 [Charybdis](https://bastardkb.com/charybdis/)
-- `dilemma`: the 3x5+2 [Dilemma](https://bastardkb.com/dilemma/)
+- `charybdis/3x5`: the 3x5+3 [Charybdis Nano](https://bastardkb.com/charybdis-nano/)
+- `charybdis/3x6`: the 3x6+3 Charybdis Mini
+- `charybdis/4x6`: the 4x6+5 [Charybdis](https://bastardkb.com/charybdis/)
+- `dilemma/3x5_2`: the 3x5+2 [Dilemma](https://bastardkb.com/dilemma/)
+- `dilemma/3x5_3`: the 3x5+3 [Dilemma](https://bastardkb.com/dilemma/)
 
 ### Microcontroller/adapter
 
 `{mcu-adapter}` corresponds to the microcontroller (_eg._ Elite-C, Blackpill, …) that is installed in your keyboard, and optionally the revision of the adapter.
 
-For **the Dilemma**, it can be one of the following:
+For **the Dilemma 3x5_2**, it can be one of the following:
 
 - `splinky`: for the [DIY version of the Dilemma](https://github.com/bastardkb/dilemma)
 - `assembled`: for the [pre-assembled version of the Dilemma](https://bastardkb.com/dilemma/)
 
 For **all other boards**, it can be one of the following:
 
-- `v1_elitec`
-- `v2_elitec`
-- `v2_splinky_v2`
-- `v2_splinky_v3`
-- `v2_stemcell`
+- `v1/elitec`
+- `v2/elitec`
+- `v2/splinky_v2`
+- `v2/splinky_v3`
+- `v2/stemcell`
 - `blackpill`
 
 The version of the adapter can also be checked directly on the adapter PCB.
