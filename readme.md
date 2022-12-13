@@ -177,8 +177,8 @@ For **all other boards**, it can be one of the following:
 
 - `v1/elitec`
 - `v2/elitec`
-- `v2/splinky_v2`
-- `v2/splinky_v3`
+- `v2/splinky_2`
+- `v2/splinky_3`
 - `v2/stemcell`
 - `blackpill`
 
