@@ -22,5 +22,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define SPLIT_LED_STATE_ENABLE
 #define SPLIT_LAYER_STATE_ENABLE // Share layer state between sides
 #define TAPPING_TOGGLE 2
-#define OLED_BRIGHTNESS 128
+#define OLED_BRIGHTNESS 200
 
