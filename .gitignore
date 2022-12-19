@@ -12,7 +12,7 @@
 # Build artifacts
 .clang_complete
 .build/
-*.elf
+# *.elf
 *.log
 *.lss
 *.lst
@@ -50,7 +50,6 @@ quantum/version.h
 # ?
 .dep
 .history/
-build/
 cmake-build-debug
 CMakeLists.txt
 *.pdf
