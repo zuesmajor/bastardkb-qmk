@@ -20,6 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MASTER_RIGHT
 #define SPLIT_LED_STATE_ENABLE
 #define SPLIT_LAYER_STATE_ENABLE // Share layer state between sides
-#define TAPPING_TOGGLE 2
 #define OLED_BRIGHTNESS 200
+#define CAPS_WORD_IDLE_TIMEOUT 5000
+#define BOTH_SHIFTS_TURNS_ON_CAPS_WORD
 
