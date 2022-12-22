@@ -67,9 +67,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |   `  |   (  |  UP  |   )  |   4  |   5  |                    |   6  |   7  |   8  |   9  |   0  |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
- * |  F1  |  LEFT  |  DOWN  |  RIGHT  |  F5  |  F6  |             -------.    ,-------|      | Left | Down |  Up  |Right |      |
+ * |      |  LEFT  |  DOWN  |  RIGHT  |      |  F6  |             -------.    ,-------|      | Left | Down |  Up  |Right |      |
  * |------+------+------+------+------+------|   [  |    |    ]  |------+------+------+------+------+------|
- * |  F7  |  F8  |  F9  | F10  | F11  | F12  |-------|    |-------|   +  |   -  |   =  |   [  |   ]  |   \  |
+ * |LShift |  F8  |  F9  | F10  | F11  | F12  |-------|    |-------|   +  |   -  |   =  |   [  |   ]  | RShift|
  * `-----------------------------------------/       /     \      \-----------------------------------------'
  *                   | LAlt | LLOCK|LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
  *                   |      |      |      |/       /         \      \ |      |      |      |
@@ -79,8 +79,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_RAISE] = LAYOUT(
   RGB_MOD, RGB_RMOD,RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD,                     _______, _______, _______, _______, _______, _______,
   KC_GRV,  KC_LPRN,    KC_UP,    KC_RPRN,    KC_4,    KC_5,                        KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
-  KC_F1,   KC_LEFT,   KC_DOWN,   KC_RGHT ,   KC_F5,   KC_F6,                       XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX,
-  KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,   KC_LBRC, KC_RBRC,  KC_PLUS, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_BSLS,
+  _______,   KC_LEFT,   KC_DOWN,   KC_RGHT ,   _______,   KC_F6,                       XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX,
+  KC_LSFT,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,   KC_LBRC, KC_RBRC,  KC_PLUS, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_RSFT,
                              _______, _______, _______,  _______, _______,  SEND_RAISE, _______, _______
 ),
 /* ADJUST
