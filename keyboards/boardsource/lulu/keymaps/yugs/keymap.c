@@ -54,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 /* LOWER
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |   F1   |   F2   |   F3   |   F4   |  F5 |                    |   ^  |   \  |      |      |      |      |
+ * |   F1   |   F2   |   F3   |   F4   |  F5 |                    |   ^  |   \  |      | PvTrack|NTrack| PauTrack|
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |  F1  |  (   |  UP  |  )   |  F5  |  F6  |                    |  `   |  ~   |  $   |   %  |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -67,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                   `----------------------------'           '------''--------------------'
  */
 [_LOWER] = LAYOUT(
-  KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6,                               KC_CIRC, KC_BSLS, _______,_______, _______, _______,
+  KC_F1, KC_F2, KC_F3, KC_F4, KC_F5, KC_F6,                               KC_CIRC, KC_BSLS, _______, KC_MPRV, KC_MNXT, KC_MPLY,
   KC_F1,   KC_LPRN,   KC_UP,   KC_RPRN,   KC_F5,   KC_F6,                     KC_GRV,   KC_TILD,   KC_DLR,   KC_PERC,  _______,  _______,
   KC_CIRC, KC_LEFT, KC_DOWN,   KC_RGHT, KC_DLR,  KC_PERC,                   KC_EQL, KC_LPRN, KC_RPRN, KC_HASH, _______, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, KC_AT, KC_PLUS, KC_LT, KC_GT, _______, _______,
