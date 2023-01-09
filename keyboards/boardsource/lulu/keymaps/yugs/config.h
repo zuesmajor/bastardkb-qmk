@@ -21,4 +21,5 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define SPLIT_LED_STATE_ENABLE
 #define SPLIT_LAYER_STATE_ENABLE // Share layer state between sides
 #define OLED_BRIGHTNESS 150
-#define OLED_TIMEOUT 5000
+#define OLED_TIMEOUT 10000
+#define OLED_FADE_OUT

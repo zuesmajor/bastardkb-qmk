@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+uint16_t anim_sleep = 0;
+
 // Render logos
 void _render_layer1_logo(void){
     static const char PROGMEM layer_logo[] = {
@@ -412,6 +414,7 @@ static void render_space(void) {
     oled_write_raw(render_row, 128);
 
     state = (state + 1 + (wpm/15)) % (128*2);
+
 }
 
 // End of space oled stuff
