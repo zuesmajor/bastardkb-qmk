@@ -54,7 +54,7 @@ led_config_t g_led_config = { {
     {     30,     35,     38,     43,     46,     50 }, // Top row
     {     31,     34,     39,     42,     47,     51 }, // Middle row
     {     32,     33,     40,     41,     48,     52 }, // Bottom row
-    { NO_LED,     53,     55,     54, NO_LED, NO_LED }, // Thumb cluster
+    { NO_LED,     53,     55,     54,     56,     57 }, // Thumb cluster
 }, {
     /* LED index to physical position. */
     // Left split.
@@ -84,8 +84,8 @@ led_config_t g_led_config = { {
     /* index=12 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
     /* index=16 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
     /* index=20 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
-    /* index=24 */ LED_FLAG_MODIFIER, LED_FLAG_MODIFIER, LED_FLAG_MODIFIER, // Thumb cluster top
-    /* index=27 */ LED_FLAG_MODIFIER, LED_FLAG_MODIFIER,                    // Thumb cluster bottom
+    /* index=24 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, // Thumb cluster top
+    /* index=27 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,                    // Thumb cluster bottom
     // Right split.
     /* index=29 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, // col 12
     /* index=33 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, // col 11
@@ -94,7 +94,7 @@ led_config_t g_led_config = { {
     /* index=45 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
     /* index=49 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,
     /* index=53 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT, // Thumb cluster
-    /* index=55 */ LED_FLAG_MODIFIER, LED_FLAG_MODIFIER,                    // Thumb cluster fakes
+    /* index=56 */ LED_FLAG_KEYLIGHT, LED_FLAG_KEYLIGHT,                    // Thumb cluster fakes
 } };
 #endif
 // clang-format on
