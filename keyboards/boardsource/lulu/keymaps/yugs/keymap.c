@@ -19,7 +19,7 @@ enum layers {
 // Tap Dance declarations
 enum {
     TD_RALT_CAPS,
-    TD_RBRC_EQLLK
+    TD_RBRC_EQL
 };
 
 // Tap Dance definitions
