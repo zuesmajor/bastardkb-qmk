@@ -2,7 +2,7 @@
   "name": "TBK Mini",
   "vendorId": "0xA8F8",
   "productId": "0x1828",
-  "lighting": "qmk_rgblight",
+  "menus": [ "qmk_rgb_matrix" ],
   "matrix": { "rows": 8, "cols": 6 },
   "layouts": {
     "keymap": [
