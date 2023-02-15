@@ -87,7 +87,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|   [  |    |    ]  |------+------+------+------+------+------|
  * |LShift |  F8  |  F9  | F10  | F11  | F12  |-------|    |-------|   +  |   -  |   =  |   [  |   ]  | RShift|
  * `-----------------------------------------/       /     \      \-----------------------------------------'
- *                   | LAlt | LLOCK|LOWER | /Space  /       \Enter \  |RAISE |BackSP| RGUI |
+ *                   |      |      |LALT  | /Space  /       \Enter \  |RAISE |  LGUI| RGUI |
  *                   |      |      |      |/       /         \      \ |      |      |      |
  *                   `----------------------------'           '------''--------------------'
  */
@@ -97,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_GRV,  KC_LPRN,    KC_UP,    KC_RPRN,    KC_4,    KC_5,                        KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    _______,
   _______,   KC_LEFT,   KC_DOWN,   KC_RGHT ,   _______,   KC_F6,                       XXXXXXX, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, XXXXXXX,
   KC_LSFT,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,   KC_LBRC, KC_RBRC,  KC_PLUS, KC_MINS, KC_EQL,  KC_LBRC, KC_RBRC, KC_RSFT,
-                             _______, _______, _______,  _______, _______,  SEND_RAISE, _______, QK_BOOT
+                             _______, _______, KC_LALT,  _______, _______,  SEND_RAISE, KC_LGUI, _______
 ),
 /* ADJUST
  * ,-----------------------------------------.                    ,-----------------------------------------.
