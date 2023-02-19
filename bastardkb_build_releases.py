@@ -316,6 +316,21 @@ def read_firmware_filename_from_logs(firmware: Firmware, log_file: Path) -> Path
     raise FileNotFoundError()
 
 
+def apply_filter(
+    firmwares: Sequence[FirmwareList],
+    pattern: re.Pattern,
+) -> Sequence[FirmwareList]:
+    return tuple(
+        filter(
+            lambda firmware_list: len(firmware_list.configurations),
+            tuple(
+                FirmwareList(branch, tuple(firmware for firmware in configurations if pattern.match(str(firmware))))
+                for branch, configurations in firmwares
+            ),
+        )
+    )
+
+
 def build(
     executor: Executor,
     reporter: Reporter,
@@ -406,7 +421,7 @@ def copy_assets_to_output_dir(executor: Executor, reporter: Reporter, output_dir
 
 def sigint_handler(reporter: Reporter, signal, frame):
     del signal, frame
-    reporter.progress_status("Interrupted.  Exiting…")
+    reporter.progress_status("Interrupted. Exiting…")
     sys.exit(1)
 
 
@@ -423,7 +438,7 @@ def main() -> None:
         "-j",
         "--parallel",
         type=int,
-        help="Parallel option to pass to qmk-compile",
+        help="Parallel option to pass to qmk-compile.",
         default=1,
     )
     parser.add_argument("-v", "--verbose", action="store_true", help="Enable verbose output.")
@@ -431,15 +446,22 @@ def main() -> None:
         "-r",
         "--repository",
         type=PurePath,
-        help="The QMK repository checkout to work with",
+        help="The QMK repository checkout to work with.",
         default=Path.cwd(),
     )
     parser.add_argument(
         "-o",
         "--output-dir",
         type=Path,
-        help="The output directory in which to copy the artifacts",
+        help="The output directory in which to copy the artifacts.",
         default=Path.cwd(),
+    )
+    parser.add_argument(
+        "-f",
+        "--filter",
+        type=str,
+        help="Filter the list of firmwares to build.",
+        default=".*",
     )
     cmdline_args = parser.parse_args()
     reporter = Reporter(cmdline_args.verbose)
@@ -472,7 +494,7 @@ def main() -> None:
     build(
         executor,
         reporter,
-        ALL_FIRMWARES,
+        apply_filter(ALL_FIRMWARES, re.compile(cmdline_args.filter)),
         partial(
             copy_firmware_to_output_dir,
             reporter,
