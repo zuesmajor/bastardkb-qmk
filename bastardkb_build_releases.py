@@ -79,8 +79,8 @@ AVR_MCUS: Sequence[str] = (
 ARM_MCUS: Sequence[str] = (
     "blackpill",
     "v2/stemcell",
-    "v2/splinky/v2",
-    "v2/splinky/v3",
+    "v2/splinky_2",
+    "v2/splinky_3",
 )
 
 ALL_MCUS: Sequence[str] = (
@@ -102,6 +102,7 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
                     keyboard=f"{keyboard}/{mcu}",
                     keymap="default",
                     keymap_alias="stock",
+                    env_vars=("VIA_ENABLE=yes",),
                 )
                 for keyboard in DACMAN_KEYBOARD_FAMILY
                 for mcu in ALL_MCUS
@@ -125,7 +126,7 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
                     keyboard=f"{keyboard}/blackpill",
                     keymap="default",
                     keymap_alias="stock",
-                    env_vars=("BOOTLOADER=tinyuf2",),
+                    env_vars=("BOOTLOADER=tinyuf2", "VIA_ENABLE=yes"),
                 )
                 for keyboard in DACMAN_KEYBOARD_FAMILY
             ),
@@ -154,107 +155,14 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
                 keyboard="skeletyl/blackpill",
                 keymap="manna-harbour_miryoku",
                 keymap_alias="miryoku",
-                env_vars=("BOOTLOADER=tinyuf2",),
+                env_vars=(
+                    "BOOTLOADER=tinyuf2",
+                    "MIRYOKU_ALPHAS=QWERTY",
+                    "MIRYOKU_EXTRA=COLEMAKDH",
+                ),
             ),
             Firmware(keyboard="dilemma/3x5_2/assembled", keymap="via", keymap_alias="stock"),
             Firmware(keyboard="dilemma/3x5_2/splinky", keymap="via", keymap_alias="stock"),
-        ),
-    ),
-    # All firmwares built on the `bkb-vial` branch, ie. the branch tracking `vial-kb/vial-qmk:vial`.
-    FirmwareList(
-        branch="bkb-vial",
-        configurations=(
-            *tuple(
-                Firmware(keyboard=f"{keyboard}/{mcu}", keymap="vial")
-                for keyboard in ALL_BASTARD_KEYBOARDS
-                for mcu in ARM_MCUS
-            ),
-            *tuple(
-                Firmware(
-                    keyboard=f"{keyboard}/blackpill",
-                    keymap="vial",
-                    env_vars=("BOOTLOADER=tinyuf2",),
-                )
-                for keyboard in ALL_BASTARD_KEYBOARDS
-            ),
-            Firmware(keyboard="dilemma/3x5_2/assembled", keymap="vial"),
-            Firmware(keyboard="dilemma/3x5_2/splinky", keymap="vial"),
-        ),
-    ),
-    # All LTS firmwares built on the `bkb-lts-vial` branch, ie. the branch
-    # tracking a frozen version of `vial-kb/vial-qmk:vial`.
-    # Vial-enabled Charybdis firmwares targeting AVR mcus are built against an
-    # older version to ensure that the minimal viable feature set fits on the
-    # controller.
-    # See https://github.com/Bastardkb/bastardkb-qmk/issues/24 for more details.
-    FirmwareList(
-        branch="bkb-lts-vial",
-        configurations=(
-            *tuple(
-                Firmware(keyboard=f"{keyboard}/{mcu}", keymap="vial", keymap_alias="lts-vial")
-                for keyboard in ALL_BASTARD_KEYBOARDS
-                for mcu in AVR_MCUS
-            ),
-        ),
-    ),
-    # Firmware build off the `bkb-vial-feat-miryoku` branch that contains quick
-    # and dirty changes to build a Vial-enabled Miryoku keymap for the Skeletyl.
-    FirmwareList(
-        branch="bkb-vial-feat-manna_harbour-miryoku",
-        configurations=(
-            *tuple(
-                Firmware(
-                    keyboard=f"skeletyl/{mcu}",
-                    keymap="manna-harbour_miryoku",
-                    keymap_alias="miryoku-vial",
-                    env_vars=(
-                        "KEY_OVERRIDE_ENABLE=no",
-                        "LTO_ENABLE=yes",
-                        "MIRYOKU_ALPHAS=QWERTY",
-                        "MIRYOKU_EXTRA=COLEMAKDH",
-                        "QMK_SETTINGS=no",
-                        "SPACE_CADET_ENABLE=no",
-                        "TAP_DANCE_ENABLE=no",
-                        "VIALRGB_ENABLE=yes",
-                        "VIAL_ENABLE=yes",
-                        "VIAL_INSECURE=yes",
-                        "VIA_ENABLE=yes",
-                    ),
-                )
-                for mcu in AVR_MCUS
-            ),
-            *tuple(
-                Firmware(
-                    keyboard=f"skeletyl/{mcu}",
-                    keymap="manna-harbour_miryoku",
-                    keymap_alias="miryoku-vial",
-                    env_vars=(
-                        "LTO_ENABLE=no",
-                        "MIRYOKU_ALPHAS=QWERTY",
-                        "MIRYOKU_EXTRA=COLEMAKDH",
-                        "VIA_ENABLE=yes",
-                        "VIAL_ENABLE=yes",
-                        "VIAL_INSECURE=yes",
-                        "VIALRGB_ENABLE=yes",
-                    ),
-                )
-                for mcu in ARM_MCUS
-            ),
-            Firmware(
-                keyboard="skeletyl/blackpill",
-                keymap="manna-harbour_miryoku",
-                keymap_alias="miryoku-vial",
-                env_vars=(
-                    "BOOTLOADER=tinyuf2",
-                    "LTO_ENABLE=no",
-                    "MIRYOKU_ALPHAS=QWERTY",
-                    "MIRYOKU_EXTRA=COLEMAKDH",
-                    "VIA_ENABLE=yes",
-                    "VIAL_ENABLE=yes",
-                    "VIAL_INSECURE=yes",
-                    "VIALRGB_ENABLE=yes",
-                ),
-            ),
         ),
     ),
 )
