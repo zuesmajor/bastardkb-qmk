@@ -128,3 +128,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 layer_state_t layer_state_set_user(layer_state_t state) {
    return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
+
+uint16_t get_tapping_term(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    // Give more time for ∞ to respond to a tap
+    case LT(0, KC_LCTL):
+      return 300;
+    default:
+      return TAPPING_TERM;
+  }
+}
