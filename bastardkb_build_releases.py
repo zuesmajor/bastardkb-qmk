@@ -163,6 +163,7 @@ ALL_FIRMWARES: Sequence[FirmwareList] = (
             ),
             Firmware(keyboard="dilemma/3x5_2/assembled", keymap="via", keymap_alias="stock"),
             Firmware(keyboard="dilemma/3x5_2/splinky", keymap="via", keymap_alias="stock"),
+            Firmware(keyboard="dilemma/3x5_3", keymap="via", keymap_alias="stock"),
         ),
     ),
 )
