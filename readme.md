@@ -50,11 +50,11 @@ If you have any doubts, feel free to reach out for help on the [Discord](https:/
 `{keymap}` corresponds to the keymap you want to use on your keyboard. It can be one of the following:
 
 - `default`
-- `vial`
+- `via`
 
-Note that, in most cases, you will want to use the `vial` keymap. The `default` keymap is very barebones, and is meant to be used as a template to start developing your own.
+Note that, in most cases, you will want to use the `via` keymap. The `default` keymap is very barebones, and is meant to be used as a template to start developing your own.
 
-The `vial` keymap is compatible out-of-the-box with [Vial](https://get.vial.today/).
+The `via` keymap is compatible out-of-the-box with [Via](https://usevia.app).
 
 ### Extension
 
@@ -81,20 +81,20 @@ The new firmware is now installed on both halves. Close QMK Toolbox, connect the
 
 If you have any questions, feel free to reach out for help on the [Discord](https://bastardkb.com/discord).
 
-## Vial
+## Via
 
-[Vial](https://get.vial.today/) is an open-source cross-platform (Windows, Linux and Mac) GUI and a QMK fork for configuring your keyboard in real time.
+[Via](https://usevia.app) is an open-source cross-platform (Windows, Linux and Mac) GUI and a QMK fork for configuring your keyboard in real time.
 
 ![](https://raw.githubusercontent.com/BastardKb/bastardkb-qmk/main/assets/vial.png)
 
-It is compatible with the `vial` keymaps that can be downloaded from the [Releases](https://github.com/Bastardkb/bastardkb-qmk/releases/) section.
+It is compatible with the `via` keymaps that can be downloaded from the [Releases](https://github.com/Bastardkb/bastardkb-qmk/releases/) section.
 
-Steps to use Vial:
+Steps to use Via:
 
-1. [Download Vial](https://get.vial.today/download) from their website, install and open the application
+1. [Open Via](https://usevia.app) from their website, install and open the application
 1. Plug your keyboard in
 1. PC/Mac will detect the keyboard automatically
-1. Use the Vial interface to edit your keymap. Changes are saved automatically.
+1. Use the Via interface to edit your keymap. Changes are saved automatically.
 
 If you have any questions, feel free to reach out for help on the [Discord](https://bastardkb.com/discord).
 
@@ -106,25 +106,25 @@ If you have any questions, feel free to reach out for help on the [Discord](http
 
 ## Building from source (advanced)
 
-Building from source is useful to people who want to customize their keyboard and keymaps beyond what Vial offers. This involves using a command-line interface, writing C code, and compiling this code into the final firmware file.
+Building from source is useful to people who want to customize their keyboard and keymaps beyond what Via offers. This involves using a command-line interface, writing C code, and compiling this code into the final firmware file.
 
 To build the firmware from source:
 
 1. Follow the [QMK docs](https://docs.qmk.fm/#/getting_started_build_tools) to setup your environment
 1. Checkout this repository
 
-To build a firmware **without** Vial support, use the `bkb-master` branch:
+To build a firmware **without** Via support, use the `bkb-master` branch:
 
 ```shell
 git checkout origin/bkb-master
 qmk compile -c -kb {keyboard-arg} -km default
 ```
 
-To build a firmware **with** Vial support, use the `bkb-vial` branch:
+To build a firmware **with** Via support, use the `bkb-master` branch:
 
 ```shell
-git checkout origin/bkb-vial
-qmk compile -c -kb {keyboard-arg} -km vial
+git checkout origin/bkb-master
+qmk compile -c -kb {keyboard-arg} -km via
 ```
 
 See [the `{keyboard-arg}` section](#keyboard-arg) for possible values.
@@ -136,7 +136,7 @@ qmk flash -c -kb bastardkb/{keyboard} -km default # On the bkb-master branch
 ```
 
 ```shell
-qmk flash -c -kb bastardkb/{keyboard} -km vial # On the bkb-vial branch
+qmk flash -c -kb bastardkb/{keyboard} -km via # On the bkb-master branch
 ```
 
 After compilation, QMK waits for the keyboard to become available as a dfu device to upload firmware. Press the `reset` button on the keyboard to complete the process.
@@ -185,21 +185,3 @@ For **all other boards**, it can be one of the following:
 The version of the adapter can also be checked directly on the adapter PCB.
 
 If you have any doubts, feel free to reach out for help on the [Discord](https://bastardkb.com/discord).
-
-### Why `bkb-master` and `bkb-vial`
-
-The changes on `bkb-master` are meant to be upstreamed and merged into QMK's `master` branch.
-
-Vial, however, does not work out-of-the-box when using QMK's `master` branch, and relies instead of some changes that have not been upstreamed yet. Because of this, this repository trackes Vial's `master` branch (see below, `qmk-vial-head`) and cherry-picks Bastard Keyboards related changes on top of it.
-
-Note that Vial's `master` usually lags a bit behind QMK's `master`, so the latest changes to QMK might not be available when working on `bkb-vial`.
-
-## Feature branches
-
-| Branch following QMK's `master` | Parent                     | Description                                          |
-| ------------------------------- | -------------------------- | ---------------------------------------------------- |
-| `bkb-master`                    | `qmk/qmk_firmware/master`  | Contains the latest sources for BastardKB's firmware |
-
-| Branch following Vial's `master` | Parent          | Description                                        |
-| -------------------------------- | ----------------| -------------------------------------------------- |
-| `bkb-vial`                       | `qmk-vial-head` | Vial support on top of the changes in `bkb-master` |
