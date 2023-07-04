@@ -18,20 +18,13 @@ enum layers {
 // Tap Dance declarations
 enum {
     TD_RALT_CAPS,
-    TD_RBRC_EQL,
-    TD_H_PLUS,
-    TD_J_LBRC,
-    TD_K_RBRC
+    TD_RBRC_EQL
 };
 
 // Tap Dance definitions
-qk_tap_dance_action_t tap_dance_actions[] = {
-    // Tap once for Escape, twice for Caps Lock
+tap_dance_action_t tap_dance_actions[] = {
     [TD_RALT_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_RALT, KC_CAPS),
-    [TD_RBRC_EQL] = ACTION_TAP_DANCE_DOUBLE(KC_RBRC, KC_EQL),
-    [TD_H_PLUS] = ACTION_TAP_DANCE_DOUBLE(KC_H, KC_PLUS),
-    [TD_J_LBRC] = ACTION_TAP_DANCE_DOUBLE(KC_J, KC_LBRC),
-    [TD_K_RBRC] = ACTION_TAP_DANCE_DOUBLE(KC_K, KC_RBRC)
+    [TD_RBRC_EQL] = ACTION_TAP_DANCE_DOUBLE(KC_RBRC, KC_EQL)
 };
 
 
@@ -55,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  [_QWERTY] = LAYOUT(
   KC_ESC,   KC_1,   KC_2,    KC_3,   KC_4,    KC_5,                     KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
   KC_TAB,   KC_Q,   KC_W,    KC_E,   KC_R,    KC_T,                     KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_MINS,
-  KC_LCTL, LGUI_T(KC_A),   KC_S,    KC_D,    KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L,    LGUI_T(KC_SCLN), KC_QUOT,
+  KC_LCTL,  KC_A,   KC_S,    KC_D,   KC_F,    KC_G,                     KC_H,    KC_J,    KC_K,    KC_L,    LGUI_T(KC_SCLN), KC_QUOT,
   KC_LSFT,  KC_Z,   KC_X,    KC_C,   KC_V,    KC_B, KC_LBRC,  TD(TD_RBRC_EQL),   KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,  KC_RSFT,
                           KC_LALT,   LOWER, KC_LGUI, KC_SPC,  KC_ENT, RAISE, ADJUST, TD(TD_RALT_CAPS)
 ),
@@ -104,7 +97,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 /* ADJUST
  * ,-----------------------------------------.                    ,-----------------------------------------.
- * |      |      |      |      |  0   |      |                    |      |      |      |      |      |      |
+ * |      |      |      |      |      |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
  * |      |      |   7  |   8  |  9   |      |                    |      |      |      |      |      |      |
  * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
