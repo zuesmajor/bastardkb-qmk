@@ -24,6 +24,7 @@
 
 #define MATRIX_ROWS 8 // Rows are doubled-up.
 #define MATRIX_COLS 5
+#define TAPPING_TERM 195
 
 #define DIODE_DIRECTION ROW2COL
 
