@@ -26,8 +26,16 @@
     },
     "python.formatting.provider": "yapf",
     "[json]": {
+<<<<<<< HEAD
 	    "editor.formatOnSave": false
     },
     "C_Cpp.dimInactiveRegions": false,
     "C_Cpp.errorSquiggles": "disabled"
+=======
+        "editor.formatOnSave": false
+    },
+    "clangd.arguments": [
+        "--header-insertion=never"
+    ]
+>>>>>>> upstream/master
 }
