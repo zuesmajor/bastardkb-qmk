@@ -18,6 +18,19 @@
 
 #pragma once
 
+#include "config_common.h"
+
+/* Key matrix configuration. */
+
+#define MATRIX_ROWS 8 // Rows are doubled-up.
+#define MATRIX_COLS 5
+#define TAPPING_TERM 195
+
+#define DIODE_DIRECTION ROW2COL
+
+// Set 0 if debouncing isn't needed.
+#define DEBOUNCE 5
+
 /* Pointing device configuration. */
 
 // Enable use of pointing device on slave split.
