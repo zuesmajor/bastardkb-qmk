@@ -1,0 +1,6 @@
+ENCODER_ENABLE = yes
+
+# No's
+
+RGBLIGHT_ENABLE = no
+RGB_MATRIX_ENABLE = no
