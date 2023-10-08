@@ -11,7 +11,6 @@
 
 # Build artifacts
 .clang_complete
-.build/
 *.elf
 *.log
 *.lss
@@ -20,6 +19,7 @@
 *.o
 *.stackdump
 *.sym
+.build/
 
 # QMK-specific
 api_data/v1
@@ -28,7 +28,6 @@ quantum/version.h
 *.eep
 *.hex
 *.qmk
-*.uf2
 
 # DD config at wrong location
 /keyboards/**/keymaps/*/info.json
