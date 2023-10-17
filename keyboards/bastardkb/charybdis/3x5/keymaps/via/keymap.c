@@ -113,16 +113,12 @@ static uint16_t auto_pointer_layer_timer = 0;
     XXXXXXX, XXXXXXX, XXXXXXX, DPI_MOD, S_D_MOD, S_D_MOD, DPI_MOD, XXXXXXX, XXXXXXX, XXXXXXX, \
     ______________HOME_ROW_GACS_L______________, ______________HOME_ROW_GACS_R______________, \
     _______, DRGSCRL, SNIPING,  EE_CLR, QK_BOOT, QK_BOOT,  EE_CLR, SNIPING, DRGSCRL, _______, \
-<<<<<<< HEAD
                       KC_BTN3, KC_BTN1, KC_BTN2, KC_BTN4, KC_BTN5
-=======
-                      KC_BTN2, KC_BTN1, KC_BTN3, KC_BTN3, KC_BTN1
->>>>>>> upstream/bkb-master
 
 /**
  * \brief Navigation layer.
  *
- * Primary right-hand layer (left home thumb) is navigation and editing. Cursor   
+ * Primary right-hand layer (left home thumb) is navigation and editing. Cursor
  * keys are on the home position, line and page movement below, clipboard above,
  * caps lock and insert on the inner column. Thumb keys are duplicated from the
  * base layer to avoid having to layer change mid edit and to enable auto-repeat.
