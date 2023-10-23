@@ -22,6 +22,11 @@
 #define SPLIT_HAND_PIN GP29
 #define SPLIT_HAND_PIN_LOW_IS_LEFT // High -> right, Low -> left.
 
+#ifdef VIA_ENABLE
+/* VIA configuration. */
+#    define DYNAMIC_KEYMAP_LAYER_COUNT 8
+#endif // VIA_ENABLE
+
 /* VBUS detection. */
 #define USB_VBUS_PIN GP19
 
@@ -35,6 +40,9 @@
 #define ENCODERS_PAD_B \
     { GP24 }
 
+/* serial.c configuration (for split keyboard). */
+#define SOFT_SERIAL_PIN GP1
+
 /* Cirque trackpad over SPI. */
 #define SPI_SCK_PIN GP22
 #define SPI_MOSI_PIN GP23
@@ -45,7 +53,7 @@
 
 /* OLED over i2c. */
 #define I2C1_CLOCK_SPEED 400000
-#define I2C1_DUTY_CYCLE FAST_DUTY_CYCLE_16_9
+#define I2C1_DUTY_CYCLE FAST_DUTY_CYCLE_2
 #define OLED_BRIGHTNESS 150
 #define OLED_TIMEOUT 10000
 #define OLED_FADE_OUT
