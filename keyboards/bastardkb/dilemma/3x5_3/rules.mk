@@ -14,6 +14,8 @@ MAGIC_ENABLE = yes			# Magic keycodes
 TRI_LAYER_ENABLE = yes		# Tri Layers
 CAPS_WORD_ENABLE = yes		# Caps Word
 ENCODER_ENABLE	= yes		# Enable encoder support
+OLED_ENABLE     = yes
+WPM_ENABLE = yes
 
 AUDIO_SUPPORTED = no        # Audio is not supported
 RGB_MATRIX_SUPPORTED = yes  # RGB matrix is supported and enabled by default
