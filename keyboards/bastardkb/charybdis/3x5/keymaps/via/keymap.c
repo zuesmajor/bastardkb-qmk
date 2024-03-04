@@ -31,6 +31,27 @@ enum charybdis_keymap_layers {
     LAYER_GAMING,
 };
 
+enum custom_keycodes {
+    // Other keycodes...
+    TG_GAMING = SAFE_RANGE, // Custom toggle for the Gaming layer
+};
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case TG_GAMING:
+            if (record->event.pressed) {
+                // Check if the Gaming layer is currently active
+                if (layer_state_is(LAYER_GAMING)) {
+                    layer_off(LAYER_GAMING); // Turn off the Gaming layer
+                } else {
+                    layer_on(LAYER_GAMING); // Turn on the Gaming layer
+                }
+            }
+            return false; // Skip further processing of this key
+    }
+    return true; // Process all other keycodes normally
+}
+
 // Automatically enable sniping-mode on the pointer layer.
 #define CHARYBDIS_AUTO_SNIPING_ON_LAYER LAYER_POINTER
 
@@ -71,7 +92,7 @@ static uint16_t auto_pointer_layer_timer = 0;
 #define LAYOUT_LAYER_GAMING                                                                   \
        KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, \
        KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L, KC_QUOT, \
-       KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M, KC_COMM,  KC_DOT, TG(LAYER_GAMING), \
+       KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M, KC_COMM,  KC_DOT, TG_GAMING, \
                       KC_ESC, KC_SPC, KC_TAB, KC_ENT, KC_BSPC
 
 /** Convenience row shorthands. */
@@ -101,7 +122,7 @@ static uint16_t auto_pointer_layer_timer = 0;
     _______________DEAD_HALF_ROW_______________, KC_PSCR,   KC_F7,   KC_F8,   KC_F9,  KC_F12, \
     ______________HOME_ROW_GACS_L______________, KC_SCRL,   KC_F4,   KC_F5,   KC_F6,  KC_F11, \
     _______________DEAD_HALF_ROW_______________, KC_PAUS,   KC_F1,   KC_F2,   KC_F3,  KC_F10, \
-                      XXXXXXX, XXXXXXX, _______, TG(LAYER_GAMING), XXXXXXX
+                      XXXXXXX, XXXXXXX, _______, TG_GAMING, XXXXXXX
 
 /**
  * \brief Media layer.
