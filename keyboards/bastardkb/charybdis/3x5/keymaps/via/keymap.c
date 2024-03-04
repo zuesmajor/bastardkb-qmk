@@ -32,8 +32,7 @@ enum charybdis_keymap_layers {
 };
 
 enum custom_keycodes {
-    // Other keycodes...
-    TG_GAMING = SAFE_RANGE, // Custom toggle for the Gaming layer
+    TG_GAMING = SAFE_RANGE,
 };
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -89,6 +88,11 @@ static uint16_t auto_pointer_layer_timer = 0;
        KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, \
                       ESC_MED, SPC_NAV, TAB_FUN, ENT_SYM, BSP_NUM
 
+/**
+ * \brief Gaming layer.
+ *
+ * Activated from the functions layer. It switches back to the base layer when the forward slash key is pressed.
+ */
 #define LAYOUT_LAYER_GAMING                                                                   \
        KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, \
        KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L, KC_QUOT, \
