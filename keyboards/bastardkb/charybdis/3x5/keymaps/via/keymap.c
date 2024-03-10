@@ -31,8 +31,8 @@ enum charybdis_keymap_layers {
     LAYER_GAMING,
 };
 
-const uint16_t PROGMEM left_paran[] = {KC_W, KC_E, COMBO_END};
-const uint16_t PROGMEM right_paran[] = {KC_E, KC_R, COMBO_END};
+const uint16_t PROGMEM left_paran[] = {KC_E, KC_R, COMBO_END};
+const uint16_t PROGMEM right_paran[] = {KC_R, KC_T, COMBO_END};
 const uint16_t PROGMEM left_brack[] = {KC_U, KC_I, COMBO_END};
 const uint16_t PROGMEM right_brack[] = {KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM left_curly[] = {KC_X, KC_C, COMBO_END};
