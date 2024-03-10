@@ -37,6 +37,8 @@ const uint16_t PROGMEM left_brack[] = {KC_U, KC_I, COMBO_END};
 const uint16_t PROGMEM right_brack[] = {KC_I, KC_O, COMBO_END};
 const uint16_t PROGMEM left_curly[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM right_curly[] = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM semi_colon[] = {KC_Z, KC_X, COMBO_END};
+const uint16_t PROGMEM colon[] = {KC_DOT, KC_SLSH, COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(left_paran, KC_LPRN),
@@ -45,6 +47,8 @@ combo_t key_combos[] = {
     COMBO(right_brack, KC_RBRC),
     COMBO(left_curly, KC_LCBR),
     COMBO(right_curly, KC_RCBR),
+    COMBO(semi_colon, KC_SCLN),
+    COMBO(colon, KC_COLN),
 };
 
 enum custom_keycodes {
