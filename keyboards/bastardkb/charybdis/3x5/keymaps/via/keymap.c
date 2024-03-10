@@ -31,6 +31,22 @@ enum charybdis_keymap_layers {
     LAYER_GAMING,
 };
 
+const uint16_t PROGMEM left_paran[] = {KC_W, KC_E, COMBO_END};
+const uint16_t PROGMEM right_paran[] = {KC_E, KC_R, COMBO_END};
+const uint16_t PROGMEM left_brack[] = {KC_U, KC_I, COMBO_END};
+const uint16_t PROGMEM right_brack[] = {KC_I, KC_O, COMBO_END};
+const uint16_t PROGMEM left_curly[] = {KC_X, KC_C, COMBO_END};
+const uint16_t PROGMEM right_curly[] = {KC_C, KC_V, COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(left_paran, KC_LPRN),
+    COMBO(right_paran, KC_RPRN),
+    COMBO(left_brack, KC_LBRC),
+    COMBO(right_brack, KC_RBRC),
+    COMBO(left_curly, KC_LCBR),
+    COMBO(right_curly, KC_RCBR),
+};
+
 enum custom_keycodes {
     TG_GAMING = SAFE_RANGE,
 };
