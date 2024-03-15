@@ -39,7 +39,7 @@ const uint16_t PROGMEM left_curly[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM right_curly[] = {KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM semi_colon[] = {KC_Z, KC_X, COMBO_END};
 const uint16_t PROGMEM colon[] = {KC_DOT, KC_SLSH, COMBO_END};
-const uint16_t PROGMEM double_quotes[] = {RALT_T(KC_L), RGUI_T(KC_QUOT), COMBO_END};
+const uint16_t PROGMEM double_quotes[] = {RALT_T(KC_L), LGUI_T(KC_QUOT), COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(left_paran, KC_LPRN),
