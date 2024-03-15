@@ -39,7 +39,7 @@ const uint16_t PROGMEM left_curly[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM right_curly[] = {KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM semi_colon[] = {KC_Z, KC_X, COMBO_END};
 const uint16_t PROGMEM colon[] = {KC_DOT, KC_SLSH, COMBO_END};
-const uint16_t PROGMEM double_quotes[] = {RALT_T(KC_L), LGUI_T(KC_QUOT), COMBO_END};
+const uint16_t PROGMEM double_quotes[] = {RALT_T(KC_L), RGUI_T(KC_QUOT), COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(left_paran, KC_LPRN),
@@ -226,7 +226,7 @@ static uint16_t auto_pointer_layer_timer = 0;
              L00,         L01,         L02,         L03,         L04,  \
              R05,         R06,         R07,         R08,         R09,  \
       LGUI_T(L10), LALT_T(L11), LCTL_T(L12), LSFT_T(L13),        L14,  \
-             R15,  RSFT_T(R16), RCTL_T(R17), LALT_T(R18), RGUI_T(R19), \
+             R15,  RSFT_T(R16), RCTL_T(R17), RALT_T(R18), RGUI_T(R19), \
       __VA_ARGS__
 #define HOME_ROW_MOD_GACS(...) _HOME_ROW_MOD_GACS(__VA_ARGS__)
 
