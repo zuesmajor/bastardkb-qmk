@@ -32,9 +32,9 @@ enum charybdis_keymap_layers {
 };
 
 const uint16_t PROGMEM left_paran[] = {LCTL_T(KC_D), LSFT_T(KC_F), COMBO_END};
-const uint16_t PROGMEM right_paran[] = {LSFT_T(KC_F), KC_G, COMBO_END};
-const uint16_t PROGMEM left_brack[] = {KC_H, RSFT_T(KC_J), COMBO_END};
-const uint16_t PROGMEM right_brack[] = {RSFT_T(KC_J), RCTL_T(KC_K), COMBO_END};
+const uint16_t PROGMEM right_paran[] = {KC_LALT(KC_S), LCTL_T(KC_D), COMBO_END};
+const uint16_t PROGMEM left_brack[] = {RSFT_T(KC_J), RCTL_T(KC_K), COMBO_END};
+const uint16_t PROGMEM right_brack[] = {RCTL_T(KC_K), KC_RALT(KC_L), COMBO_END};
 const uint16_t PROGMEM left_curly[] = {KC_X, KC_C, COMBO_END};
 const uint16_t PROGMEM right_curly[] = {KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM semi_colon[] = {KC_Z, KC_X, COMBO_END};
