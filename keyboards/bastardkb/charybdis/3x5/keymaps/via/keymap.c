@@ -31,12 +31,12 @@ enum charybdis_keymap_layers {
     LAYER_GAMING,
 };
 
-const uint16_t PROGMEM left_paran[] = {LALT_T(KC_S), LCTL_T(KC_D), COMBO_END};
-const uint16_t PROGMEM right_paran[] = {LCTL_T(KC_D), LSFT_T(KC_F), COMBO_END};
-const uint16_t PROGMEM left_brack[] = {RSFT_T(KC_J), RCTL_T(KC_K), COMBO_END};
-const uint16_t PROGMEM right_brack[] = {RCTL_T(KC_K), RALT_T(KC_L), COMBO_END};
-const uint16_t PROGMEM left_curly[] = {KC_X, KC_C, COMBO_END};
-const uint16_t PROGMEM right_curly[] = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM left_paran[] = {LCTL_T(KC_D), LSFT_T(KC_F), COMBO_END};
+const uint16_t PROGMEM right_paran[] = {RSFT_T(KC_J), RCTL_T(KC_K), COMBO_END};
+const uint16_t PROGMEM left_brack[] = {KC_E, KC_R, COMBO_END};
+const uint16_t PROGMEM right_brack[] = {KC_U, KC_I, COMBO_END};
+const uint16_t PROGMEM left_curly[] = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM right_curly[] = {KC_M, KC_COMM, COMBO_END};
 const uint16_t PROGMEM semi_colon[] = {KC_Z, KC_X, COMBO_END};
 const uint16_t PROGMEM colon[] = {KC_DOT, KC_SLSH, COMBO_END};
 const uint16_t PROGMEM double_quotes[] = {RALT_T(KC_L), RGUI_T(KC_QUOT), COMBO_END};
