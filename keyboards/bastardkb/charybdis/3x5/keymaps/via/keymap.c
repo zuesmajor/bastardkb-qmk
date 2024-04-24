@@ -32,13 +32,12 @@ enum charybdis_keymap_layers {
 };
 
 const uint16_t PROGMEM left_paran[] = {LCTL_T(KC_D), LSFT_T(KC_F), COMBO_END};
-const uint16_t PROGMEM right_paran[] = {LSFT_T(KC_F), KC_G, COMBO_END};
-const uint16_t PROGMEM left_brack[] = {KC_H, RSFT_T(KC_J), COMBO_END};
-const uint16_t PROGMEM right_brack[] = {RSFT_T(KC_J), RCTL_T(KC_K), COMBO_END};
-const uint16_t PROGMEM left_curly[] = {KC_X, KC_C, COMBO_END};
-const uint16_t PROGMEM right_curly[] = {KC_C, KC_V, COMBO_END};
-const uint16_t PROGMEM semi_colon[] = {KC_Z, KC_X, COMBO_END};
-const uint16_t PROGMEM colon[] = {KC_DOT, KC_SLSH, COMBO_END};
+const uint16_t PROGMEM right_paran[] = {RSFT_T(KC_J), RCTL_T(KC_K), COMBO_END};
+const uint16_t PROGMEM left_brack[] = {KC_E, KC_R, COMBO_END};
+const uint16_t PROGMEM right_brack[] = {KC_U, KC_I, COMBO_END};
+const uint16_t PROGMEM left_curly[] = {KC_C, KC_V, COMBO_END};
+const uint16_t PROGMEM right_curly[] = {KC_M, KC_COMM, COMBO_END};
+const uint16_t PROGMEM double_quotes[] = {RALT_T(KC_L), RGUI_T(KC_QUOT), COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(left_paran, KC_LPRN),
@@ -47,8 +46,7 @@ combo_t key_combos[] = {
     COMBO(right_brack, KC_RBRC),
     COMBO(left_curly, KC_LCBR),
     COMBO(right_curly, KC_RCBR),
-    COMBO(semi_colon, KC_SCLN),
-    COMBO(colon, KC_COLN),
+    COMBO(double_quotes, KC_DQUO),
 };
 
 enum custom_keycodes {
@@ -191,7 +189,7 @@ static uint16_t auto_pointer_layer_timer = 0;
 #define LAYOUT_LAYER_NUMERAL                                                                  \
     KC_LBRC,    KC_7,    KC_8,    KC_9, KC_RBRC, _______________DEAD_HALF_ROW_______________, \
     KC_SCLN,    KC_4,    KC_5,    KC_6,  KC_EQL, ______________HOME_ROW_GACS_R______________, \
-     KC_GRV,    KC_1,    KC_2,    KC_3, KC_BSLS, _______________DEAD_HALF_ROW_______________, \
+     KC_GRV,    KC_1,    KC_2,    KC_3, KC_BSLS, KC_DOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  \
                        KC_DOT,    KC_0, KC_MINS, XXXXXXX, _______
 
 /**
@@ -224,7 +222,7 @@ static uint16_t auto_pointer_layer_timer = 0;
              L00,         L01,         L02,         L03,         L04,  \
              R05,         R06,         R07,         R08,         R09,  \
       LGUI_T(L10), LALT_T(L11), LCTL_T(L12), LSFT_T(L13),        L14,  \
-             R15,  RSFT_T(R16), RCTL_T(R17), LALT_T(R18), RGUI_T(R19), \
+             R15,  RSFT_T(R16), RCTL_T(R17), RALT_T(R18), RGUI_T(R19), \
       __VA_ARGS__
 #define HOME_ROW_MOD_GACS(...) _HOME_ROW_MOD_GACS(__VA_ARGS__)
 
