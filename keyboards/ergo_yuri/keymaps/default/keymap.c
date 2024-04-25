@@ -1,6 +1,9 @@
 // Copyright 2023 QMK
 // SPDX-License-Identifier: GPL-2.0-or-later
 
+#include "color.h"
+#include "qp.h"
+#include "generated/gundam.qgf.h"
 #include QMK_KEYBOARD_H
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -12,3 +15,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  KC_SPC, KC_RGUI
     )
 };
+
+static painter_device_t display;
+static painter_image_handle_t my_image;
+static deferred_token my_anim;
+
+void keyboard_post_init_kb(void) {
+    display = qp_gc9a01_make_spi_device(240, 240, LCD_CS_PIN, LCD_DC_PIN, LCD_RST_PIN, 4, 0);         // Create the display
+    qp_init(display, QP_ROTATION_0);   // Initialise the display
+    qp_clear(display);
+    my_image = qp_load_image_mem(gfx_gundam);
+    //    qp_drawimage(display, 0, 0, my_image);
+    my_anim = qp_animate(display, 0, 0, my_image);
+}
