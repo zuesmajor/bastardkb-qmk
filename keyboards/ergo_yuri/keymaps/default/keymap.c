@@ -27,4 +27,5 @@ void keyboard_post_init_kb(void) {
     my_image = qp_load_image_mem(gfx_gundam);
     //    qp_drawimage(display, 0, 0, my_image);
     my_anim = qp_animate(display, 0, 0, my_image);
+    qp_power(display, true);
 }
