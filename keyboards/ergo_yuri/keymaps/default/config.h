@@ -1,8 +1,10 @@
 #pragma once
 
-#define SPI_MOSI_PIN GP3
-#define SPI_MISO_PIN NO_PIN
-#define SPI_SCK_PIN	GP2
+#define SPI_DRIVER SPID0
+
+#define SPI_MISO_PIN GP16 // this is a fake pin
+#define SPI_SCK_PIN	GP2 // SCL
+#define SPI_MOSI_PIN GP3 // SDA
 
 #define LCD_RST_PIN GP13
 #define LCD_DC_PIN GP14
