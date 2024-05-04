@@ -8,4 +8,4 @@
 #include <qp.h>
 
 extern const uint32_t gfx_totoro_length;
-extern const uint8_t  gfx_totoro[221226];
+extern const uint8_t  gfx_totoro[626069];
