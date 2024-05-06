@@ -10,7 +10,8 @@
         "console": false,
         "extrakey": true,
         "mousekey": false,
-        "nkro": true
+        "nkro": true,
+        "audio": true
     },
     "matrix_pins": {
         "cols": ["GP20", "GP23", "GP4", "GP5", "GP6", "GP7", "GP8", "GP9", "GP12"],
