@@ -27,6 +27,8 @@ static painter_device_t display;
 static painter_image_handle_t my_image;
 static deferred_token my_anim;
 
+float shutdown[][2] = SONG(GOODBYE_SOUND);
+
 void keyboard_post_init_kb(void) {
     display = qp_gc9a01_make_spi_device(240, 240, LCD_CS_PIN, LCD_DC_PIN, LCD_RST_PIN, 4, 0);         // Create the display
     qp_init(display, QP_ROTATION_0);   // Initialise the display
@@ -38,6 +40,7 @@ void keyboard_post_init_kb(void) {
 
 void suspend_power_down_user(void) {
     qp_power(display, false);
+    PLAY_SONG(shutdown);
 }
 
 void suspend_wakeup_init_user(void) {
