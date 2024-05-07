@@ -37,12 +37,3 @@ void keyboard_post_init_kb(void) {
     my_anim = qp_drawimage(display, 0, 0, my_image);
     // my_anim = qp_animate(display, 0, 0, my_image);
 }
-
-void suspend_power_down_user(void) {
-    qp_power(display, false);
-    PLAY_SONG(shutdown);
-}
-
-void suspend_wakeup_init_user(void) {
-    qp_power(display, true);
-}
