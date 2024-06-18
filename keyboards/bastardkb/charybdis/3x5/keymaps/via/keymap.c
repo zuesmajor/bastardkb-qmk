@@ -28,13 +28,12 @@ enum charybdis_keymap_layers {
     LAYER_POINTER,
     LAYER_NUMERAL,
     LAYER_SYMBOLS,
-    LAYER_GAMING,
 };
 
 const uint16_t PROGMEM left_paran[] = {LCTL_T(KC_D), LSFT_T(KC_F), COMBO_END};
 const uint16_t PROGMEM right_paran[] = {RSFT_T(KC_J), RCTL_T(KC_K), COMBO_END};
-const uint16_t PROGMEM left_brack[] = {KC_E, KC_R, COMBO_END};
-const uint16_t PROGMEM right_brack[] = {KC_U, KC_I, COMBO_END};
+const uint16_t PROGMEM left_brack[] = {KC_R, KC_T, COMBO_END};
+const uint16_t PROGMEM right_brack[] = {KC_Y, KC_U, COMBO_END};
 const uint16_t PROGMEM left_curly[] = {KC_C, KC_V, COMBO_END};
 const uint16_t PROGMEM right_curly[] = {KC_M, KC_COMM, COMBO_END};
 const uint16_t PROGMEM double_quotes[] = {RALT_T(KC_L), RGUI_T(KC_QUOT), COMBO_END};
@@ -48,26 +47,6 @@ combo_t key_combos[] = {
     COMBO(right_curly, KC_RCBR),
     COMBO(double_quotes, KC_DQUO),
 };
-
-enum custom_keycodes {
-    TG_GAMING = SAFE_RANGE,
-};
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-        case TG_GAMING:
-            if (record->event.pressed) {
-                // Check if the Gaming layer is currently active
-                if (layer_state_is(LAYER_GAMING)) {
-                    layer_off(LAYER_GAMING); // Turn off the Gaming layer
-                } else {
-                    layer_on(LAYER_GAMING); // Turn on the Gaming layer
-                }
-            }
-            return false; // Skip further processing of this key
-    }
-    return true; // Process all other keycodes normally
-}
 
 // Automatically enable sniping-mode on the pointer layer.
 #define CHARYBDIS_AUTO_SNIPING_ON_LAYER LAYER_POINTER
@@ -106,16 +85,6 @@ static uint16_t auto_pointer_layer_timer = 0;
        KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, \
                       ESC_MED, SPC_NAV, TAB_FUN, ENT_SYM, BSP_NUM
 
-/**
- * \brief Gaming layer.
- *
- * Activated from the functions layer. It switches back to the base layer when the forward slash key is pressed.
- */
-#define LAYOUT_LAYER_GAMING                                                                   \
-       KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, \
-       KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L, KC_QUOT, \
-       KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M, KC_COMM,  KC_DOT, TG_GAMING, \
-                      KC_ESC, KC_SPC, KC_TAB, KC_ENT, KC_BSPC
 
 /** Convenience row shorthands. */
 #define _______________DEAD_HALF_ROW_______________ XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX
@@ -144,7 +113,7 @@ static uint16_t auto_pointer_layer_timer = 0;
     _______________DEAD_HALF_ROW_______________, KC_PSCR,   KC_F7,   KC_F8,   KC_F9,  KC_F12, \
     ______________HOME_ROW_GACS_L______________, KC_SCRL,   KC_F4,   KC_F5,   KC_F6,  KC_F11, \
     _______________DEAD_HALF_ROW_______________, KC_PAUS,   KC_F1,   KC_F2,   KC_F3,  KC_F10, \
-                      XXXXXXX, XXXXXXX, _______, TG_GAMING, XXXXXXX
+                      XXXXXXX, XXXXXXX, _______, XXXXXXX, KC_DEL
 
 /**
  * \brief Media layer.
@@ -188,7 +157,7 @@ static uint16_t auto_pointer_layer_timer = 0;
  */
 #define LAYOUT_LAYER_NUMERAL                                                                  \
     KC_LBRC,    KC_7,    KC_8,    KC_9, KC_RBRC, _______________DEAD_HALF_ROW_______________, \
-    KC_SCLN,    KC_4,    KC_5,    KC_6,  KC_EQL, ______________HOME_ROW_GACS_R______________, \
+    KC_SCLN,    KC_4,    KC_5,    KC_6,  KC_EQL, KC_SLSH, KC_ASTR, KC_PLUS, KC_MINS, XXXXXXX, \
      KC_GRV,    KC_1,    KC_2,    KC_3, KC_BSLS, KC_DOT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,  \
                        KC_DOT,    KC_0, KC_MINS, XXXXXXX, _______
 
@@ -203,7 +172,7 @@ static uint16_t auto_pointer_layer_timer = 0;
     KC_LCBR, KC_AMPR, KC_ASTR, KC_LPRN, KC_RCBR, _______________DEAD_HALF_ROW_______________, \
     KC_COLN,  KC_DLR, KC_PERC, KC_CIRC, KC_PLUS, ______________HOME_ROW_GACS_R______________, \
     KC_TILD, KC_EXLM,   KC_AT, KC_HASH, KC_PIPE, _______________DEAD_HALF_ROW_______________, \
-                      KC_LPRN, KC_RPRN, KC_UNDS, _______, XXXXXXX
+                      KC_LPRN, KC_DEL, KC_UNDS, _______, XXXXXXX
 
 /**
  * \brief Add Home Row mod to a layout.
@@ -262,7 +231,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [LAYER_NUMERAL] = LAYOUT_wrapper(LAYOUT_LAYER_NUMERAL),
   [LAYER_POINTER] = LAYOUT_wrapper(LAYOUT_LAYER_POINTER),
   [LAYER_SYMBOLS] = LAYOUT_wrapper(LAYOUT_LAYER_SYMBOLS),
-  [LAYER_GAMING] = LAYOUT_wrapper(LAYOUT_LAYER_GAMING),
 };
 // clang-format on
 
